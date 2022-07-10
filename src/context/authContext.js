@@ -1,6 +1,7 @@
 import { useState, createContext, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const authContext = createContext();
 
@@ -35,11 +36,12 @@ const AuthProvider = ({ children }) => {
                             setUser(res.data.user)
                             setProcessing(false);
                         })
-                        .catch();
+                        .catch(err => toast.error('Fehler'));
                 })
                 .catch(err => {
                     setVerified(false);
                     setProcessing(false);
+                    toast.error('Auth Fehler')
                 });
         } else {
             setProcessing(false);

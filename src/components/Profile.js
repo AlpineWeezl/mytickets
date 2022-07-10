@@ -17,11 +17,11 @@ const Profile = () => {
     const updateHandler = (e) => {
         e.preventDefault();
         const { email, firstname } = e.target;
+        const apiUrl = process.env.REACT_APP_API_URL;
         if (!email.value) {
             toast.warning('Bitte gib eine E-Mail Adresse ein!');
             return;
         }
-        const apiUrl = process.env.REACT_APP_API_URL;
         const modUser =
         {
             user: {
@@ -65,6 +65,9 @@ const Profile = () => {
                     sx={{ textAlign: 'center' }}
                 />
                 {user.firstname && (<h3 style={{ 'textAlign': 'center' }}>({user.username})</h3>)}
+                <Container sx={{ display: 'flex', justifyContent: 'center', my: 3 }}>
+                    <Button type="button" variant="outlined" color="error"><Logout /></Button>
+                </Container>
                 <CardContent>
                     <form onSubmit={updateHandler}>
                         <FormControl sx={{ width: 1, marginY: 3 }}>
@@ -100,10 +103,6 @@ const Profile = () => {
                     </form>
                 </CardContent>
             </Card>
-            <Container sx={{ display: 'flex', justifyContent: 'center', my: 3 }}>
-                <Button type="button" variant="outlined" color="error"><Logout /></Button>
-
-            </Container>
         </Container>
     )
 }
