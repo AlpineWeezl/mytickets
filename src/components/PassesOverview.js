@@ -41,6 +41,7 @@ const PassesOverview = () => {
         navigate('/passes/new')
     }
 
+    if (error) { return <h3>Error...</h3> }
     if (loading) { return <h3>Loading...</h3> }
 
     return (

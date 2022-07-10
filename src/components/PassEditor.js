@@ -30,7 +30,8 @@ const PassEditor = ({ newPass }) => {
                 .catch(err => {
                     toast.error('Die Karte konnte nicht geladen werden!');
                     console.log(err);
-                    setLoading(false)
+                    setError(err);
+                    setLoading(false);
                 });
         } else {
             setLoading(false);
@@ -88,6 +89,7 @@ const PassEditor = ({ newPass }) => {
             });
     }
 
+    if (error ||(!newPass && !pass)) { return <h3>Error...</h3> }
     if (loading ||(!newPass && !pass)) { return <h3>Loading...</h3> }
 
     return (
