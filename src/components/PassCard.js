@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, Container, Divider } from '@mui/material'
+import { CardContent, CardHeader, Container, Divider } from '@mui/material'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -10,7 +10,7 @@ const PassCard = ({ pass }) => {
     }
 
     return (
-            <div onClick={clickHandler} className={'bg-white my-auto'}>
+            <div onClick={clickHandler} className={'bg-white my-3 rounded-md shadow-md'}>
                 <CardHeader title={pass.title} />
                 <Divider />
                 <CardContent>

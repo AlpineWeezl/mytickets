@@ -11,7 +11,7 @@ import Profile from './components/Profile';
 function App() {
     return (
         <div className="App">
-            <header className="App-header">
+            <header className="App-header z-50 bg-white">
                 <Navbar />
             </header>
             <main>

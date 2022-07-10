@@ -31,13 +31,12 @@ const Navbar = () => {
             <BottomNavigation
                 showLabels
                 value={value}
-                className={'shadow'}
                 onChange={(event, newValue) => {
                     console.log(newValue);
                     setValue(newValue);
                     navigator(newValue);
                 }}
-            >
+                >
                 {verified && <BottomNavigationAction label="Profil" icon={<Person />} value={'/profile'} />}
                 {verified && <BottomNavigationAction label="Zeitkarten" icon={<CreditCardSharp />} value={`/passes/user/${user._id}`} />}
                 {verified && <BottomNavigationAction label="Nutzungen" icon={<RestoreOutlined />} value={'/usages'} />}

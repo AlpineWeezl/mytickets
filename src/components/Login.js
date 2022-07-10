@@ -59,7 +59,7 @@ const Login = () => {
                             <FormHelperText id="email-helper-text">Bitte trage hier dein Passwort ein.</FormHelperText>
                         </FormControl>
                         <Container sx={{ width: 1, display: 'flex', justifyContent: 'space-between' }}>
-                            <Button type="reset" variant="contained" color="error"> <RestartAlt /></Button>
+                            <Button type="reset" variant="contained" color="error" className="z-0"> <RestartAlt /></Button>
                             <Button type="submit" variant="contained" color="success"> <LoginOutlined /></Button>
                         </Container>
                     </form>

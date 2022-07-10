@@ -66,52 +66,46 @@ const Profile = () => {
     }
 
     return (
-        <Container sx={{ marginY: 3 }}>
-            <Card>
-                <CardHeader
-                    title={`Hallo ${user.firstname ? user.firstname : user.username}`}
-                    sx={{ textAlign: 'center' }}
-                />
-                {user.firstname && (<h3 style={{ 'textAlign': 'center' }}>({user.username})</h3>)}
-                <Container sx={{ display: 'flex', justifyContent: 'center', my: 3 }}>
-                    <Button type="button" onClick={logoutHandler} variant="outlined" color="error"><Logout /></Button>
-                </Container>
-                <CardContent>
-                    <form onSubmit={updateHandler}>
-                        <FormControl sx={{ width: 1, marginY: 3 }}>
-                            <InputLabel htmlFor="email">E-Mail Adresse</InputLabel>
-                            <Input id="email" aria-describedby="email-helper-text" type="email" defaultValue={user.email} sx={{ paddingX: 2 }} />
-                            <FormHelperText id="email-helper-text">Bitte trage hier deine E-Mail Adresse ein.</FormHelperText>
-                        </FormControl>
-                        <FormControl sx={{ width: 1, marginY: 3 }}>
-                            <InputLabel htmlFor="firstname">Vorname</InputLabel>
-                            <Input id="firstname" aria-describedby="firstname-helper-text" type="firstname" defaultValue={user.firstname} sx={{ paddingX: 2 }} />
-                            <FormHelperText id="email-helper-text">Hier kannst du deinen Vornamen eintragen.</FormHelperText>
-                        </FormControl>
-                        <Container sx={{ width: 1, display: 'flex', justifyContent: 'space-between' }}>
-                            <Button type="reset" variant="contained" color="error"><PersonOutlined /> <RestartAlt /></Button>
-                            <Button type="submit" variant="contained" color="success"><PersonOutlined /> <Save /></Button>
-                        </Container>
-                    </form>
-                    <form onSubmit={passwordHandler}>
-                        <FormControl sx={{ width: 1, marginY: 3 }}>
-                            <InputLabel htmlFor="password">Passwort</InputLabel>
-                            <Input id="password" aria-describedby="password-helper-text" type="password" sx={{ paddingX: 2 }} />
-                            <FormHelperText id="email-helper-text">Bitte trage hier dein Passwort ein.</FormHelperText>
-                        </FormControl>
-                        <FormControl sx={{ width: 1, marginY: 3 }}>
-                            <InputLabel htmlFor="passwordRepeat">Passwort wiederholen</InputLabel>
-                            <Input id="passwordRepeat" aria-describedby="password-repeat-helper-text" sx={{ paddingX: 2 }} type="password" />
-                            <FormHelperText id="email-helper-text">Bitte wiederhole hier dein Passwort.</FormHelperText>
-                        </FormControl>
-                        <Container sx={{ width: 1, display: 'flex', justifyContent: 'space-between' }}>
-                            <Button type="reset" variant="contained" color="error"><KeyOutlined /> <RestartAlt /></Button>
-                            <Button type="submit" variant="contained" color="success"><KeyOutlined /> <Save /></Button>
-                        </Container>
-                    </form>
-                </CardContent>
-            </Card>
-        </Container>
+        <div className="bg-white rounded-md shadow-md mt-3 mb-16 mx-3 z-0">
+            <div className="py-3 border-b-2 border-black text-center">
+                <h2 className="text-2xl my-3">{`Hallo ${user.firstname ? user.firstname : user.username}`}</h2>
+                {user.firstname && (<h3 className="text-xl my-2">({user.username})</h3>)}
+                    <button type="button" onClick={logoutHandler} className='border-2 border-red-500 w-20 rounded shadow py-2'><Logout /></button>
+            </div>
+            <div className="w-[95%] mx-auto py-3 my-3">
+                <form onSubmit={updateHandler} className='flex flex-col gap-5'>
+                    <div className="flex flex-col">
+                        <label htmlFor="email" className="text-xs">E-Mail Adresse</label>
+                        <input id="email" aria-describedby="email-helper-text" type="email" defaultValue={user.email} className='border-b-2 p-2' />
+                    </div>
+                    <div className="flex flex-col">
+                        <label htmlFor="fistname" className="text-xs">Vorname</label>
+                        <input id="firstname" aria-describedby="firstname-helper-text border" type="text" defaultValue={user.firstname} className='border-b-2 p-2'/>
+                    </div>
+                    <div className="flex justify-around my-3">
+                        <button type="reset" className="p-2 w-20 rounded shadow bg-red-600 text-white"><PersonOutlined /> <RestartAlt /></button>
+                        <button type="submit" className="p-2 w-20 rounded shadow bg-green-700 text-white"><PersonOutlined /> <Save /></button>
+                    </div>
+                </form>
+            </div>
+            <hr className="border-black"/>
+            <div className="w-[95%] mx-auto py-3 my-3">
+                <form onSubmit={passwordHandler} className='flex flex-col gap-5'>
+                    <div className="flex flex-col">
+                        <label htmlFor="password" className="text-xs">Passwort</label>
+                        <input id="password" aria-describedby="password-helper-text" type="password" className='border-b-2 p-2' />
+                    </div>
+                    <div className="flex flex-col">
+                        <label htmlFor="passwordRepeat" className="text-xs">Passwort wiederholen</label>
+                        <input id="passwordRepeat" aria-describedby="password-repeat-helper-text" type="password" className='border-b-2 p-2' />
+                    </div>
+                    <div className="flex justify-around my-3">
+                        <button type="reset" className="p-2 w-20 rounded shadow bg-red-600 text-white"><KeyOutlined /> <RestartAlt /></button>
+                        <button type="submit" className="p-2 w-20 rounded shadow bg-green-700 text-white"><KeyOutlined /> <Save /></button>
+                    </div>
+                </form>
+            </div >
+        </div >
     )
 }
 
