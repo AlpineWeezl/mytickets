@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { authContext } from "../context/authContext";
 
 const Profile = () => {
-    const { verified, user, setUser, token } = useContext(authContext);
+    const { verified, setVerified, user, setUser, token, setToken } = useContext(authContext);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -57,6 +57,14 @@ const Profile = () => {
         }
     }
 
+    const logoutHandler = async (e) => {
+        await setVerified(false);
+        await setUser(null);
+        localStorage.removeItem('token');
+        await setToken(null);
+        toast.success('Du wurdest erfolgreich ausgeloggt.')
+    }
+
     return (
         <Container sx={{ marginY: 3 }}>
             <Card>
@@ -66,18 +74,18 @@ const Profile = () => {
                 />
                 {user.firstname && (<h3 style={{ 'textAlign': 'center' }}>({user.username})</h3>)}
                 <Container sx={{ display: 'flex', justifyContent: 'center', my: 3 }}>
-                    <Button type="button" variant="outlined" color="error"><Logout /></Button>
+                    <Button type="button" onClick={logoutHandler} variant="outlined" color="error"><Logout /></Button>
                 </Container>
                 <CardContent>
                     <form onSubmit={updateHandler}>
                         <FormControl sx={{ width: 1, marginY: 3 }}>
                             <InputLabel htmlFor="email">E-Mail Adresse</InputLabel>
-                            <Input id="email" aria-describedby="email-helper-text" type="email" sx={{ paddingX: 2 }} defaultValue={user.email} />
+                            <Input id="email" aria-describedby="email-helper-text" type="email" defaultValue={user.email} sx={{ paddingX: 2 }} />
                             <FormHelperText id="email-helper-text">Bitte trage hier deine E-Mail Adresse ein.</FormHelperText>
                         </FormControl>
                         <FormControl sx={{ width: 1, marginY: 3 }}>
                             <InputLabel htmlFor="firstname">Vorname</InputLabel>
-                            <Input id="firstname" aria-describedby="firstname-helper-text" type="firstname" defaultValue={user.firstname} />
+                            <Input id="firstname" aria-describedby="firstname-helper-text" type="firstname" defaultValue={user.firstname} sx={{ paddingX: 2 }} />
                             <FormHelperText id="email-helper-text">Hier kannst du deinen Vornamen eintragen.</FormHelperText>
                         </FormControl>
                         <Container sx={{ width: 1, display: 'flex', justifyContent: 'space-between' }}>
