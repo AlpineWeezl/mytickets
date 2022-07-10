@@ -1,5 +1,5 @@
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
-import { RestoreOutlined, Favorite, Person, Add, CreditCardSharp } from '@mui/icons-material';
+import { RestoreOutlined, Favorite, Person, Add, CreditCardSharp, Login } from '@mui/icons-material';
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authContext } from "../context/authContext";
@@ -38,12 +38,13 @@ const Navbar = () => {
                     navigator(newValue);
                 }}
             >
-                {user && <BottomNavigationAction label="Profil" icon={<Person />} value={'/profile'} />}
-                {user && <BottomNavigationAction label="Zeitkarten" icon={<CreditCardSharp />} value={`/passes/user/${user._id}`} />}
-                {user && <BottomNavigationAction label="Nutzungen" icon={<RestoreOutlined />} value={'/usages'} />}
-                {user && <BottomNavigationAction label="Nutzung" icon={<Add />} value={'/usages/new'} />}
-                {user && <BottomNavigationAction label="Favoriten" icon={<Favorite />} value={'/favorites'} />}
-                                    }
+                {verified && <BottomNavigationAction label="Profil" icon={<Person />} value={'/profile'} />}
+                {verified && <BottomNavigationAction label="Zeitkarten" icon={<CreditCardSharp />} value={`/passes/user/${user._id}`} />}
+                {verified && <BottomNavigationAction label="Nutzungen" icon={<RestoreOutlined />} value={'/usages'} />}
+                {verified && <BottomNavigationAction label="Nutzung" icon={<Add />} value={'/usages/new'} />}
+                {verified && <BottomNavigationAction label="Favoriten" icon={<Favorite />} value={'/favorites'} />}
+                {!verified && <BottomNavigationAction label="Login" icon={<Login />} value={'/login'} />}
+                
             </BottomNavigation>
         </Paper>
     )
