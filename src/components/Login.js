@@ -1,4 +1,4 @@
-import { PersonOutlined, RestartAlt, Save } from "@mui/icons-material";
+import { LoginOutlined, PersonOutlined, RestartAlt, Save } from "@mui/icons-material";
 import { Button, Card, CardContent, CardHeader, Container, FormControl, FormHelperText, Input, InputLabel } from "@mui/material";
 import axios from "axios";
 import { useContext, useEffect } from "react"
@@ -59,8 +59,8 @@ const Login = () => {
                             <FormHelperText id="email-helper-text">Bitte trage hier dein Passwort ein.</FormHelperText>
                         </FormControl>
                         <Container sx={{ width: 1, display: 'flex', justifyContent: 'space-between' }}>
-                            <Button type="reset" variant="contained" color="error"><PersonOutlined /> <RestartAlt /></Button>
-                            <Button type="submit" variant="contained" color="success"><PersonOutlined /> <Save /></Button>
+                            <Button type="reset" variant="contained" color="error"> <RestartAlt /></Button>
+                            <Button type="submit" variant="contained" color="success"> <LoginOutlined /></Button>
                         </Container>
                     </form>
                 </CardContent>
