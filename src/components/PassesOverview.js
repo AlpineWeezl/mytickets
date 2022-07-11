@@ -46,17 +46,18 @@ const PassesOverview = () => {
 
     return (
         <>
-            <Container sx={{textAlign: 'center'}}>
-
-                <h3>Deine Pässe</h3>
-                <Button variant='outlined' onClick={newPassHandler}><Add /></Button>
+            <div className='flex flex-col justify-center items-center'>
+                <div className='w-full bg-white shadow-md text-center py-3'>
+                    <h3 className='font-bold text-xl'>Meine Pässe</h3>
+                </div>
+                <button onClick={newPassHandler} className='fixed bottom-16 right-2 w-10 h-10 rounded-full shadow-md text-white bg-blue-500 '><Add /></button>
                 {
 
                     (passes) && passes.map(pass => {
                         return <PassCard key={pass._id} pass={pass} />
                     })
                 }
-            </Container>
+            </div>
         </>
     )
 }
