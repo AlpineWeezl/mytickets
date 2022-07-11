@@ -40,10 +40,8 @@ const Navbar = () => {
                 {verified && <BottomNavigationAction label="Profil" icon={<Person />} value={'/profile'} />}
                 {verified && <BottomNavigationAction label="Zeitkarten" icon={<CreditCardSharp />} value={`/passes/user/${user._id}`} />}
                 {verified && <BottomNavigationAction label="Nutzungen" icon={<RestoreOutlined />} value={'/usages'} />}
-                {verified && <BottomNavigationAction label="Nutzung" icon={<Add />} value={'/usages/new'} />}
                 {verified && <BottomNavigationAction label="Favoriten" icon={<Favorite />} value={'/favorites'} />}
                 {!verified && <BottomNavigationAction label="Login" icon={<Login />} value={'/login'} />}
-                
             </BottomNavigation>
         </Paper>
     )
