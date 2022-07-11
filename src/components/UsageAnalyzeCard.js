@@ -22,17 +22,17 @@ const UsageAnalyzeCard = ({ pass }) => {
             })
             .then(res => {
                 setUsages(res.data.usages);
-                setSum(0);
-                setSum(res.data.usages.map(usage => {
-                    return (parseFloat(sum) + parseFloat(usage.price));
-                }));
+                const mappedSum = res.data.usages.map(usage => {
+                    return (usage.price);
+                });
+                setSum(mappedSum.reduce((total, current) => { return total + current; }, 0));
                 setLoading(false);
             })
             .catch(err => {
                 setError(err);
                 toast.error('Die Pass Details konnten nicht geladen werden!')
             });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [apiUrl, pass, token]);
 
     if (loading) { return <h2>Loading...</h2> }
