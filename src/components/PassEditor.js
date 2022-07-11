@@ -61,8 +61,8 @@ const PassEditor = ({ newPass }) => {
             pass: {
                 title: title.value,
                 price: price.value,
-                begin: begin.value,
-                end: end.value
+                begin: new Date(begin.value),
+                end: new Date(end.value)
             }
         }
 
@@ -76,7 +76,7 @@ const PassEditor = ({ newPass }) => {
                 console.log(err);
                 toast.error('Die Karte konnte nicht angelegt werden!');
             });
-        
+
         !newPass && axios
             .put(`${apiUrl}/passes/${pass._id}`, passToReq, { headers: { authorization: token } })
             .then(res => {
@@ -89,8 +89,8 @@ const PassEditor = ({ newPass }) => {
             });
     }
 
-    if (error ||(!newPass && !pass)) { return <h3>Error...</h3> }
-    if (loading ||(!newPass && !pass)) { return <h3>Loading...</h3> }
+    if (error || (!newPass && !pass)) { return <h3>Error...</h3> }
+    if (loading || (!newPass && !pass)) { return <h3>Loading...</h3> }
 
     return (
         <Container sx={{ my: 2 }}>
@@ -108,7 +108,7 @@ const PassEditor = ({ newPass }) => {
                         </FormControl>
                         <FormControl sx={{ width: 1, mb: 3 }}>
                             <InputLabel htmlFor='begin'>Beginn</InputLabel>
-                            <Input id='begin' type='date' defaultValue={`${pass ? pass.begin : ''}`} />
+                            <Input id='begin' type='date' defaultValue={`${pass ? format(parseISO(pass.begin), 'yyyy-MM-dd') : ''}`} />
                         </FormControl>
                         <FormControl sx={{ width: 1, mb: 3 }}>
                             <InputLabel htmlFor='end'>Ende</InputLabel>

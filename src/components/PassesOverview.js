@@ -1,5 +1,3 @@
-import { Add } from '@mui/icons-material';
-import { Button, Container } from '@mui/material';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
@@ -50,13 +48,21 @@ const PassesOverview = () => {
                 <div className='w-full bg-white shadow-md text-center py-3'>
                     <h3 className='font-bold text-xl'>Meine Pässe</h3>
                 </div>
-                <button onClick={newPassHandler} className='fixed bottom-16 right-2 w-10 h-10 rounded-full shadow-md text-white bg-blue-500 '><Add /></button>
-                {
+                <button
+                    onClick={newPassHandler}
+                    type='button'
+                    className='fixed bottom-20 right-6 w-14 h-14 flex justify-center items-center rounded-full shadow-md text-white bg-blue-500 text-6xl'
+                    >
+                    +
+                </button>
+                <div className='flex flex-col items-center gap-2 pt-2 pb-16 px-2 w-full'>
+                    {
 
-                    (passes) && passes.map(pass => {
-                        return <PassCard key={pass._id} pass={pass} />
-                    })
-                }
+                        (passes) && passes.map(pass => {
+                            return <PassCard key={pass._id} pass={pass} />
+                        })
+                    }
+                </div>
             </div>
         </>
     )
