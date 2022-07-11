@@ -1,4 +1,3 @@
-import { CardContent, CardHeader, Container, Divider } from '@mui/material'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -10,24 +9,28 @@ const PassCard = ({ pass }) => {
     }
 
     return (
-            <div onClick={clickHandler} className={'bg-white my-3 rounded-md shadow-md'}>
-                <CardHeader title={pass.title} />
-                <Divider />
-                <CardContent>
-                    <h3>{pass.description ? pass.description : 'Keine Beschreibung vorhanden.'}</h3>
-                    <Divider />
-                    <Container sx={{ display: 'flex' }}>
-                        <Container sx={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }} >
-                            <h4 className='my-0'>Kaufpreis:</h4>
-                            <p>{pass.price} €</p>
-                            <h4>Benutzt:</h4>
-                            <p>{pass.price} €</p>
-                        </Container>
-                        <Container sx={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
-                        </Container>
-                    </Container>
-                </CardContent>
+        <div onClick={clickHandler} className={'bg-white w-full rounded-md shadow-md'}>
+            <div>
+                <h3 className='text-center text-lg font-bold'>{pass.title}</h3>
             </div>
+            <hr />
+            <div className='p-2'>
+                <p>{pass.description ? pass.description : 'Keine Beschreibung vorhanden.'}</p>
+            </div>
+            <hr />
+            <div className='grid grid-cols-4 grid-flow-row p-2' >
+                <h4 className='text-right'>Beginn:</h4>
+                <p className='text-right'>{pass.begin}</p>
+                <h4 className='text-right'>Ende:</h4>
+                <p className='text-right'>{pass.end}</p>
+                <h4 className='text-right'>Kaufpreis:</h4>
+                <p className='text-right'>{pass.price} €</p>
+                <h4 className='text-right'>Benutzt:</h4>
+                <p className='text-right'>{pass.price} € (100%)</p>
+
+                
+            </div>
+        </div>
     )
 }
 
