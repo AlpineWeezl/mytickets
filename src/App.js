@@ -25,11 +25,11 @@ function App() {
                     <Route path={'/passes/new'} element={<PassEditor newPass={true} />} />
                     <Route path={'/passes/:passId'} element={<PassDetails />} />
                     <Route path={'/passes/user/:userId'} element={<PassesOverview />} />
-                    <Route path={'/passes/:passId/edit'} element={<PassEditor newPass={false} />} />
+                    <Route path={'/passes/edit/:passId'} element={<PassEditor newPass={false} />} />
                     <Route path={'/usages/new/:passId'} element={<UsageEditor newUsage={true} />} />
                     <Route path={'/usages/:passId'} element={<UsageDetails />} />
                     <Route path={'/usages/user/:userId'} element={<UsageDetails />} />
-                    <Route path={'/usages/edit/:usageId'} element={<UsageEditor newPass={false} />} />
+                    <Route path={'/usages/edit/:usageId'} element={<UsageEditor newUsage={false} />} />
                 </Routes>
 
             </main>

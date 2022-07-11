@@ -1,3 +1,4 @@
+import { Edit } from '@mui/icons-material';
 import axios from 'axios';
 import { useEffect, useState } from 'react'
 import { useContext } from 'react';
@@ -36,12 +37,17 @@ const PassDetails = () => {
             });
     }, [apiUrl, navigate, passId, token, verified]);
 
-    if (loading) { return <h2>Loading...</h2> }
-    if (error) { return <h2>Error...</h2> }
-
     const newUsageHandler = () => {
         navigate(`/usages/new/${passId}`);
     }
+
+    const editPassHandler = (e) => {
+        navigate(`/passes/edit/${passId}`);
+    }
+
+    if (loading) { return <h2>Loading...</h2> }
+    if (error) { return <h2>Error...</h2> }
+
 
     return (
         <>
@@ -52,8 +58,10 @@ const PassDetails = () => {
             >
                 +
             </button>
-            <div className='fixed top-0 w-full shadow-md bg-white py-5'>
+            <div className='fixed flex justify-between items-center top-0 w-full shadow-md bg-white p-4'>
+                <div></div>
                 <h2 className='text-center font-bold text-2xl'>{pass.title}</h2>
+                <button onClick={editPassHandler} className='flex justify-center items-center w-12 h-12 bg-green-600 text-white rounded-full'><Edit /></button>
             </div>
             <div className='flex flex-col gap-5 my-24 mx-2'>
                 <TimeAnalyzeCard pass={pass} />

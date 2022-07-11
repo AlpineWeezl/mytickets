@@ -14,6 +14,7 @@ const AuthProvider = ({ children }) => {
     const [searchString, setSearchString] = useState(null);
     const [token, setToken] = useState(localStorage.getItem('token'));
     const [verified, setVerified] = useState(false);
+    const [dateFormat, setDateFormat] = useState('yyyy-MM-dd');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -52,7 +53,7 @@ const AuthProvider = ({ children }) => {
 
     if (!processing) {
         return (
-            <authContext.Provider value={{ setVerified, verified, setUserId, userId, user, setUser, token, setToken, imgPlaceholder, searchString, setSearchString }}>
+            <authContext.Provider value={{ setVerified, verified, setUserId, userId, user, setUser, token, setToken, imgPlaceholder, searchString, setSearchString, dateFormat, setDateFormat }}>
                 {children}
             </authContext.Provider>
         );

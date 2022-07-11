@@ -8,7 +8,7 @@ import { authContext } from '../context/authContext';
 import CompanyDropDown from './CompanyDropDown';
 
 const UsageEditor = ({ newUsage }) => {
-    const { user, verified, token } = useContext(authContext);
+    const { dateFormat, user, verified, token } = useContext(authContext);
     const { passId } = useParams();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -166,7 +166,7 @@ const UsageEditor = ({ newUsage }) => {
                             id="date"
                             aria-describedby="date-helper-text border"
                             type="date"
-                            defaultValue={!newUsage ? format(parseISO(usage.date), 'yyyy-MM-dd') : Date.now}
+                            defaultValue={!newUsage ? format(parseISO(usage.date), dateFormat) : Date.now}
                             className='border-b-2 p-2'
                         />
                     </div>

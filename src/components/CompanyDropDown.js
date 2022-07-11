@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { authContext } from "../context/authContext";
 
 const CompanyDropDown = ({ selectedCompany, setSelectedCompany }) => {
-    const { token } = useContext(authContext);
+    const { dateFormat, token } = useContext(authContext);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [companies, setCompanies] = useState(null);
@@ -37,7 +37,7 @@ const CompanyDropDown = ({ selectedCompany, setSelectedCompany }) => {
     const selectCompanyHandler = async (e) => {
         const { id } = e.target;
         await axios
-            .get(`${apiUrl}/companies/${id}`, { headers: {authorization: token} })
+            .get(`${apiUrl}/companies/${id}`, { headers: { authorization: token } })
             .then(res => {
                 setSelectedCompany(res.data.company);
             })
@@ -52,7 +52,6 @@ const CompanyDropDown = ({ selectedCompany, setSelectedCompany }) => {
     if (error) { return <h3>Error...</h3> }
     if (loading) { return <h3>Loading...</h3> }
 
-
     return (
         <div className="flex flex-col pb-5">
             <button onClick={toggleOpenHandler} className="flex p-4 border rounded justify-center items-center">
@@ -63,7 +62,14 @@ const CompanyDropDown = ({ selectedCompany, setSelectedCompany }) => {
                 <div className="absolute border shadow-md rounded-md bg-white divide-y" hidden={!isOpen}>
                     {
                         companies && companies.map(company => {
-                            return <button id={company._id} key={company._id} onClick={selectCompanyHandler} className="w-full p-3">{company.title}</button>
+                            return <button
+                                id={company._id}
+                                key={company._id}
+                                onClick={selectCompanyHandler}
+                                className="w-full p-3"
+                            >
+                                {company.title}
+                            </button>
                         })
                     }
                 </div>
