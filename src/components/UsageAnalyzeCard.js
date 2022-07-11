@@ -22,6 +22,7 @@ const UsageAnalyzeCard = ({ pass }) => {
             })
             .then(res => {
                 setUsages(res.data.usages);
+                setSum(0);
                 setSum(res.data.usages.map(usage => {
                     return (parseFloat(sum) + parseFloat(usage.price));
                 }));

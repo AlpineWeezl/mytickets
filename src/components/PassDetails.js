@@ -39,10 +39,15 @@ const PassDetails = () => {
     if (loading) { return <h2>Loading...</h2> }
     if (error) { return <h2>Error...</h2> }
 
+    const newUsageHandler = () => {
+        navigate(`/usages/new/${passId}`);
+    }
+
     return (
         <>
             <button
                 type='button'
+                onClick={newUsageHandler}
                 className='fixed bottom-20 right-6 w-14 h-14 flex justify-center items-center rounded-full shadow-md text-white bg-blue-500 text-6xl'
             >
                 +
