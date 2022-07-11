@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { authContext } from '../context/authContext';
+import CompanyDropDown from './CompanyDropDown';
 
 const UsageEditor = ({ newUsage }) => {
     const { user, verified, token } = useContext(authContext);
@@ -12,6 +13,7 @@ const UsageEditor = ({ newUsage }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [usage, setUsage] = useState(null);
+    const [selectedCompany, setSelectedCompany] = useState(null);
     const { usageId } = useParams();
     const navigate = useNavigate();
     const apiUrl = process.env.REACT_APP_API_URL;
@@ -108,6 +110,7 @@ const UsageEditor = ({ newUsage }) => {
                     <Delete /></button>}
             </div>
             <div className="w-[85%] mx-auto py-3 my-3">
+                <CompanyDropDown selectedCompany={selectedCompany} setSelectedCompany={setSelectedCompany} />
                 <form onSubmit={usageHandler} className='flex flex-col gap-5'>
                     <div className="flex flex-col">
                         <label htmlFor="title" className="text-xs">Titel</label>
@@ -144,7 +147,7 @@ const UsageEditor = ({ newUsage }) => {
                             id="date"
                             aria-describedby="date-helper-text border"
                             type="date"
-                            defaultValue={!newUsage ? usage.price : ''}
+                            defaultValue={!newUsage ? format(parseISO(usage.date), 'yyyy-MM-dd') : ''}
                             className='border-b-2 p-2'
                         />
                     </div>
