@@ -5,8 +5,7 @@ import { toast } from "react-toastify";
 import { authContext } from "../context/authContext";
 
 const AssociationDropDown = ({ pass, setSelectedAssociation }) => {
-    const { user, verified, token } = useContext(authContext);
-    const { passId } = useParams();
+    const { dateFormat, verified, token } = useContext(authContext);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [associations, setAssociations] = useState(null);
