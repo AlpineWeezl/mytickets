@@ -7,6 +7,8 @@ import PassDetails from './components/PassDetails';
 import PassEditor from './components/PassEditor';
 import PassesOverview from './components/PassesOverview';
 import Profile from './components/Profile';
+import UsageDetails from './components/UsageDetails';
+import UsageEditor from './components/UsageEditor';
 
 function App() {
     return (
@@ -20,10 +22,14 @@ function App() {
                     <Route path={'/'} element={<Login />} />
                     <Route path={'/login'} element={<Login />} />
                     <Route path={'/profile'} element={<Profile />} />
-                    <Route path={'/passes/user/:userId'} element={<PassesOverview />} />
-                    <Route path={'/passes/:passId'} element={<PassDetails />} />
                     <Route path={'/passes/new'} element={<PassEditor newPass={true} />} />
+                    <Route path={'/passes/:passId'} element={<PassDetails />} />
+                    <Route path={'/passes/user/:userId'} element={<PassesOverview />} />
                     <Route path={'/passes/:passId/edit'} element={<PassEditor newPass={false} />} />
+                    <Route path={'/usages/new/:passId'} element={<UsageEditor newUsage={true} />} />
+                    <Route path={'/usages/:passId'} element={<UsageDetails />} />
+                    <Route path={'/usages/user/:userId'} element={<UsageDetails />} />
+                    <Route path={'/usages/edit/:usageId'} element={<UsageEditor newPass={false} />} />
                 </Routes>
 
             </main>

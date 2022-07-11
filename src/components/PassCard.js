@@ -1,4 +1,3 @@
-import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const PassCard = ({ pass }) => {
@@ -27,8 +26,6 @@ const PassCard = ({ pass }) => {
                 <p className='text-right'>{pass.price} €</p>
                 <h4 className='text-right'>Benutzt:</h4>
                 <p className='text-right'>{pass.price} € (100%)</p>
-
-                
             </div>
         </div>
     )
