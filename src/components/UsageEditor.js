@@ -41,8 +41,15 @@ const UsageEditor = ({ newUsage }) => {
     }, [apiUrl, navigate, newUsage, token, usageId, verified]);
 
     const usageHandler = (e) => {
+        console.log(selectedCompany);
+
         e.preventDefault();
-        const { title, price, begin, end } = e.target;
+        const { title, description, price, date, duration, durationUnit, comment } = e.target;
+
+        if (!selectedCompany) {
+            toast.warning('Wähle eine Gesellschaft aus!');
+            return;
+        }
         if (!title.value) {
             toast.warning('Gib bitte einen Titel ein!');
             return;
@@ -51,20 +58,32 @@ const UsageEditor = ({ newUsage }) => {
             toast.warning('Gib bitte einen Preis ein!');
             return;
         }
-        if (!begin.value) {
+        if (!date.value) {
             toast.warning('Gib bitte ein Datum ein!');
             return;
         }
-        if (!end.value) {
+        if (!duration.value) {
             toast.warning('Gib bitte eine Dauer ein!');
             return;
         }
+        if (!durationUnit.value) {
+            toast.warning('Gib bitte eine Einheit ein!');
+            return;
+        }
+
         const usageToReq = {
             usage: {
+                passId: passId,
+                userId: user._id,
+                companyId: selectedCompany._id,
+                associationId: selectedCompany.associationId,
                 title: title.value,
+                description: description.value,
                 price: price.value,
-                date: new Date(begin.value),
-                end: new Date(end.value)
+                date: new Date(date.value),
+                duration: duration.value,
+                durationoUnit: durationUnit.value,
+                comment: comment.value
             }
         }
 
@@ -132,7 +151,7 @@ const UsageEditor = ({ newUsage }) => {
                         />
                     </div>
                     <div className="flex flex-col">
-                        <label htmlFor="price" className="text-xs">Kaufpreis</label>
+                        <label htmlFor="price" className="text-xs">Ticketpreis</label>
                         <input
                             id="price"
                             aria-describedby="price-helper-text border"
@@ -147,7 +166,38 @@ const UsageEditor = ({ newUsage }) => {
                             id="date"
                             aria-describedby="date-helper-text border"
                             type="date"
-                            defaultValue={!newUsage ? format(parseISO(usage.date), 'yyyy-MM-dd') : ''}
+                            defaultValue={!newUsage ? format(parseISO(usage.date), 'yyyy-MM-dd') : Date.now}
+                            className='border-b-2 p-2'
+                        />
+                    </div>
+                    <div className='flex gap-3'>
+                        <div className="flex flex-col w-full">
+                            <label htmlFor="duration" className="text-xs">Dauer</label>
+                            <input
+                                id="duration"
+                                aria-describedby="duration-helper-text border"
+                                type="number"
+                                defaultValue={!newUsage ? usage.duration : ''}
+                                className='border-b-2 p-2'
+                            />
+                        </div>
+                        <div className="flex flex-col w-8">
+                            <label htmlFor='durationUnit' className='text-xs'>Einheit</label>
+                            <input
+                                id='durationUnit'
+                                type={'text'}
+                                defaultValue={!newUsage ? usage.durationUnit : 'h'}
+                                className='border-b-2 p-2'
+                            />
+                        </div>
+                    </div>
+                    <div className="flex flex-col">
+                        <label htmlFor="comment" className="text-xs">Kommentar</label>
+                        <input
+                            id="comment"
+                            aria-describedby="comment-helper-text"
+                            type="text"
+                            defaultValue={!newUsage ? usage.comment : ''}
                             className='border-b-2 p-2'
                         />
                     </div>
@@ -162,15 +212,3 @@ const UsageEditor = ({ newUsage }) => {
 }
 
 export default UsageEditor
-
-// passId: { type: String, required: true },
-// userId: { type: String, required: true },
-// associationId: {type: String, required: true },
-// companyId: {type: String, required: true },
-// title: { type: String, required: true },
-// description: { type: String, required: false },
-// date: { type: Date, required: true, default: Date.now },
-// price: { type: Number, required: true },
-// duration: { type: Number, required: false },
-// durationUnit: { type: String, required: false },
-// comment: { type: String, required: false },

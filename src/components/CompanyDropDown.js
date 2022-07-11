@@ -1,13 +1,12 @@
 import { ArrowDropDown, ArrowDropUp } from "@mui/icons-material";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { authContext } from "../context/authContext";
 
 const CompanyDropDown = ({ selectedCompany, setSelectedCompany }) => {
     const { token } = useContext(authContext);
-    const { passId } = useParams();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [companies, setCompanies] = useState(null);
@@ -20,7 +19,6 @@ const CompanyDropDown = ({ selectedCompany, setSelectedCompany }) => {
         axios
             .get(`${apiUrl}/companies`, { headers: { authorization: token } })
             .then(res => {
-                console.log(res.data);
                 setCompanies(res.data.companies);
                 setLoading(false);
             })
@@ -41,7 +39,6 @@ const CompanyDropDown = ({ selectedCompany, setSelectedCompany }) => {
         await axios
             .get(`${apiUrl}/companies/${id}`, { headers: {authorization: token} })
             .then(res => {
-                console.log(res.data);
                 setSelectedCompany(res.data.company);
             })
             .catch(err => {
