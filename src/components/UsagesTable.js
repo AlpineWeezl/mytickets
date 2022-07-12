@@ -47,7 +47,7 @@ const UsagesTable = ({ newUsageHandler }) => {
             <div className='rounded-md shadow-md bg-white'>
                 <div className='flex justify-between p-2 items-center'>
                     <div></div>
-                    <h3 className='text-center font-bold text-xl my-3'>Nutzungen</h3>
+                    <h3 className='text-center font-bold text-xl my-3'>Nutzungen ({usages.length})</h3>
                     <button
                         type='button'
                         onClick={newUsageHandler}
@@ -60,9 +60,9 @@ const UsagesTable = ({ newUsageHandler }) => {
                     <table className='table-auto min-w-full rounded-t-xl'>
                         <thead className='bg-slate-200 border-b-4 rounded-lg text-left'>
                             <tr>
-                                <th className='p-3'>Datum</th>
-                                <th className='p-3'>Gesellschaft</th>
-                                <th className='p-3'>Preis</th>
+                                <th className='py-3 pl-2'>Datum</th>
+                                <th className='py-3'>Gesellschaft</th>
+                                <th className='py-3 pr-2 text-right'>Preis</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -71,9 +71,9 @@ const UsagesTable = ({ newUsageHandler }) => {
                                 usages.map((usage, i) => {
                                     return (
                                         <tr key={usage._id} id={usage._id} onClick={usageDetailHandler} className={`border-b ${(i % 2 !== 0) && 'bg-slate-50'}`}>
-                                            <td id={usage._id} name={usage._id} className='p-3'>{format(parseISO(usage.date), 'yyyy-MM-dd')}</td>
+                                            <td id={usage._id} name={usage._id} className='pl-2'>{format(parseISO(usage.date), 'yyyy-MM-dd')}</td>
                                             <UsageTableCompanyField usage={usage} />
-                                            <td id={usage._id} name={usage._id} className=' p-3 text-right'>{usage.price} €</td>
+                                            <td id={usage._id} name={usage._id} className='text-right pr-2'>{parseFloat(usage.price).toFixed(2)}</td>
                                         </tr>
                                     )
                                 })

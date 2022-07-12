@@ -7,11 +7,11 @@ import { toast } from "react-toastify";
 import { authContext } from "../context/authContext";
 
 const Login = () => {
-    const { verified, setVerified, setToken, setUser } = useContext(authContext);
+    const { verified, setVerified, setToken, setUser, user } = useContext(authContext);
     const navigator = useNavigate();
 
     useEffect(() => {
-        verified && navigator('/profile');
+       verified && navigator(`/profile`);
     }, [navigator, verified]);
 
     const loginHandler = (e) => {
@@ -35,7 +35,7 @@ const Login = () => {
                 setToken(res.headers.authorization);
                 setVerified(true);
                 toast.success('Anmeldung erfolgreich!');
-                navigator('/profile')
+                navigator(`/profile`)
             })
             .catch(err => {
                 toast.error('Anmeldung nicht möglich!')

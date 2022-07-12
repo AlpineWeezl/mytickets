@@ -8,6 +8,8 @@ import { authContext } from "../context/authContext";
 const Profile = () => {
     const { verified, setVerified, user, setUser, token, setToken } = useContext(authContext);
     const navigate = useNavigate();
+    const apiUrl = process.env.REACT_APP_API_URL;
+
 
     useEffect(() => {
         !verified && navigate('/login')
@@ -16,7 +18,6 @@ const Profile = () => {
     const updateHandler = (e) => {
         e.preventDefault();
         const { email, firstname } = e.target;
-        const apiUrl = process.env.REACT_APP_API_URL;
         if (!email.value) {
             toast.warning('Bitte gib eine E-Mail Adresse ein!');
             return;
@@ -54,6 +55,18 @@ const Profile = () => {
             toast.warning('Das Passwort muss mindestens 6 Zeichen enthalten!');
             return;
         }
+
+        axios
+            .put(`${apiUrl}/users/password/${user._id}`, { user: { password: password.value } }, { headers: { authorization: token } })
+            .then(res => {
+                console.log(res.data.user);
+                setUser(res.data.user);
+                toast.success('Profil erfolgreich geändert');
+            })
+            .catch(err => {
+                toast.error('Die Änderung konnte nicht gespeichert werden!')
+            });
+
     }
 
     const logoutHandler = async (e) => {
@@ -61,6 +74,7 @@ const Profile = () => {
         await setUser(null);
         localStorage.removeItem('token');
         await setToken(null);
+        navigate('/login');
         toast.success('Du wurdest erfolgreich ausgeloggt.')
     }
 
