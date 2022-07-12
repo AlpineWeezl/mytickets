@@ -63,6 +63,8 @@ const PassEditor = ({ newPass }) => {
         }
         const passToReq = {
             pass: {
+                userId: user._id,
+                associationId: selectedAssociation._id,
                 title: title.value,
                 price: price.value,
                 begin: new Date(begin.value),
@@ -143,10 +145,10 @@ const PassEditor = ({ newPass }) => {
                     </div>
                 </div>
                 <div className="flex justify-around my-3">
-                        <button type="button" onClick={() => navigate(-1)} className="p-2 w-20 rounded shadow-md border border-red-600 bg-white text-red-600"><ArrowBackOutlined /></button>
-                        <button type="submit" className="p-2 w-20 rounded shadow-md bg-green-700 text-white"><Save /></button>
-                        <button type="reset" className="p-2 w-20 rounded shadow-md bg-red-600 text-white"> <RestartAlt /></button>
-                    </div>
+                    <button type="button" onClick={() => navigate(-1)} className="p-2 w-20 rounded shadow-md border border-red-600 bg-white text-red-600"><ArrowBackOutlined /></button>
+                    <button type="submit" className="p-2 w-20 rounded shadow-md bg-green-700 text-white"><Save /></button>
+                    <button type="reset" className="p-2 w-20 rounded shadow-md bg-red-600 text-white"> <RestartAlt /></button>
+                </div>
             </form>
         </div>
     )
