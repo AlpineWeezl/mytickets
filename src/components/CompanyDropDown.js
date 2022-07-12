@@ -67,14 +67,14 @@ const CompanyDropDown = ({ usage, selectedCompany, setSelectedCompany }) => {
                 {!isOpen ? <ArrowDropDown /> : <ArrowDropUp />}
             </button>
             <div>
-                <div className="absolute w-[85%] border shadow-md rounded-md bg-white divide-y" hidden={!isOpen}>
+                <div className="absolute w-[85%] border shadow-md rounded-md bg-white divide-y h-[70vh] overflow-y-scroll" hidden={!isOpen}>
                     {
-                        companies && companies.map(company => {
+                        companies && companies.map((company, i) => {
                             return <button
                                 id={company._id}
                                 key={company._id}
                                 onClick={selectCompanyHandler}
-                                className="w-full p-3"
+                                className={`w-full p-3 ${(i % 2 === 0 && 'bg-slate-100')}`}
                             >
                                 {company.title}
                             </button>

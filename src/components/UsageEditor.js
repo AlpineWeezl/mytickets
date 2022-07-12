@@ -89,7 +89,7 @@ const UsageEditor = ({ newUsage }) => {
         newUsage && axios
             .post(`${apiUrl}/usages/pass/${passId}`, usageToReq, { headers: { authorization: token } })
             .then(res => {
-                navigate(`/usages/edit/${res.data.usage._id}`)
+                navigate(-1);
                 toast.success('Die Nutzung wurde erfolgreich angelegt!');
             })
             .catch(err => {
@@ -100,7 +100,7 @@ const UsageEditor = ({ newUsage }) => {
         !newUsage && axios
             .put(`${apiUrl}/usages/${usage._id}`, usageToReq, { headers: { authorization: token } })
             .then(res => {
-                console.log(res.data);
+                navigate(-1);
                 toast.success('Die Nutzung wurde erfolgreich geändert!');
             })
             .catch(err => {
@@ -109,12 +109,17 @@ const UsageEditor = ({ newUsage }) => {
             });
     }
 
-
-    const goBackHandler = () => {
-        navigate(-1);
-    }
-
     const deleteHandler = () => {
+        axios
+            .delete(`${apiUrl}/usages/${usage._id}`, { headers: { authorization: token } })
+            .then(res => {
+                navigate(-1);
+                toast.success('Die Nutzung wurde erfolgreich gelöscht!')
+            })
+            .catch(err => {
+                toast('Die Nutzung konnte nicht gelöscht werden!');
+                console.log(err);
+            });
 
     }
 
@@ -207,7 +212,7 @@ const UsageEditor = ({ newUsage }) => {
                         />
                     </div>
                     <div className="flex justify-around my-3">
-                        <button type="button" onClick={goBackHandler} className="p-2 w-20 rounded shadow-md border border-red-600 bg-white text-red-600"><ArrowBack /></button>
+                        <button type="button" onClick={() => navigate(-1)} className="p-2 w-20 rounded shadow-md border border-red-600 bg-white text-red-600"><ArrowBack /></button>
                         <button type="submit" className="p-2 w-20 rounded shadow-md bg-green-700 text-white"><Save /></button>
                         <button type="reset" className="p-2 w-20 rounded shadow-md bg-red-600 text-white"> <RestartAlt /></button>
                     </div>

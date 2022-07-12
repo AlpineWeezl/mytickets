@@ -23,7 +23,6 @@ const PassEditor = ({ newPass }) => {
             axios
                 .get(`${apiUrl}/passes/${passId}`, { headers: { authorization: token } })
                 .then(res => {
-                    console.log(res.data.pass);
                     setPass(res.data.pass);
                     setLoading(false);
                 })
@@ -69,7 +68,7 @@ const PassEditor = ({ newPass }) => {
         newPass && axios
             .post(`${apiUrl}/passes/user/${user._id}`, passToReq, { headers: { authorization: token } })
             .then(res => {
-                navigate(`/passes/${res.data.pass._id}/edit`)
+                navigate(-1);
                 toast.success('Die Karte wurde erfolgreich angelegt!');
             })
             .catch(err => {
@@ -80,7 +79,7 @@ const PassEditor = ({ newPass }) => {
         !newPass && axios
             .put(`${apiUrl}/passes/${pass._id}`, passToReq, { headers: { authorization: token } })
             .then(res => {
-                console.log(res.data);
+                navigate(`/passes/user/${user._id}`);
                 toast.success('Die Karte wurde erfolgreich geändert!');
             })
             .catch(err => {
@@ -93,35 +92,56 @@ const PassEditor = ({ newPass }) => {
     if (loading || (!newPass && !pass)) { return <h3>Loading...</h3> }
 
     return (
-        <Container sx={{ my: 2 }}>
-            <Card>
-                <CardHeader title={`${!newPass ? pass.title : 'Neue Karte erstellen'}`} sx={{ textAlign: 'center' }} />
-                <CardContent>
-                    <form onSubmit={passHandler}>
-                        <FormControl sx={{ width: 1, my: 3 }}>
-                            <InputLabel htmlFor='title'>Titel</InputLabel>
-                            <Input id='title' type='text' defaultValue={`${pass ? pass.title : ''}`} />
-                        </FormControl>
-                        <FormControl sx={{ width: 1, mb: 3 }}>
-                            <InputLabel htmlFor='price'>Preis [ € ]</InputLabel>
-                            <Input id='price' type='number' defaultValue={`${pass ? pass.price : ''}`} />
-                        </FormControl>
-                        <FormControl sx={{ width: 1, mb: 3 }}>
-                            <InputLabel htmlFor='begin'>Beginn</InputLabel>
-                            <Input id='begin' type='date' defaultValue={`${pass ? format(parseISO(pass.begin), 'yyyy-MM-dd') : ''}`} />
-                        </FormControl>
-                        <FormControl sx={{ width: 1, mb: 3 }}>
-                            <InputLabel htmlFor='end'>Ende</InputLabel>
-                            <Input id='end' type='date' defaultValue={`${pass ? format(parseISO(pass.end), 'yyyy-MM-dd') : ''}`} />
-                        </FormControl>
-                        <Container sx={{ width: 1, display: 'flex', justifyContent: 'space-between' }}>
-                            <Button type="reset" variant="contained" color="error"><CreditCard /> <RestartAlt /></Button>
-                            <Button type="submit" variant="contained" color="success"><CreditCard /> <Save /></Button>
-                        </Container>
-                    </form>
-                </CardContent>
-            </Card>
-        </Container >
+        <div className='bg-white p-2 shadow-md'>
+            <div className='text-center font-bold text-2xl my-5'>
+                <h2>{`${!newPass ? pass.title : 'Neue Karte erstellen'}`}</h2>
+            </div>
+            <hr className='border-2 border-black'/>
+            <form onSubmit={passHandler} className='flex flex-col gap-3 py-5'>
+                <div className='flex flex-col'>
+                    <label htmlFor='title' className='text-xs'>Titel</label>
+                    <input
+                        id='title'
+                        type='text'
+                        className='border-b-2 p-2'
+                        defaultValue={`${pass ? pass.title : ''}`}
+                    />
+                </div>
+                <div className='flex flex-col'>
+                    <label htmlFor='price' className='text-xs'>Preis [ € ]</label>
+                    <input
+                        id='price'
+                        type='number'
+                        className='border-b-2 p-2'
+                        defaultValue={`${pass ? pass.price : ''}`}
+                    />
+                </div>
+                <div className='flex justify-between'>
+                    <div className='flex flex-col'>
+                        <label htmlFor='begin' className='text-xs'>Beginn</label>
+                        <input
+                            id='begin'
+                            type='date'
+                            className='border-b-2 p-2'
+                            defaultValue={`${pass ? format(parseISO(pass.begin), 'yyyy-MM-dd') : ''}`}
+                        />
+                    </div>
+                    <div className='flex flex-col'>
+                        <label htmlFor='begin' className='text-xs'>Ende</label>
+                        <input
+                            id='end'
+                            type='date'
+                            className='border-b-2 p-2'
+                            defaultValue={`${pass ? format(parseISO(pass.end), 'yyyy-MM-dd') : ''}`}
+                        />
+                    </div>
+                </div>
+                <Container sx={{ width: 1, display: 'flex', justifyContent: 'space-between' }}>
+                    <Button type="reset" variant="contained" color="error"><CreditCard /> <RestartAlt /></Button>
+                    <Button type="submit" variant="contained" color="success"><CreditCard /> <Save /></Button>
+                </Container>
+            </form>
+        </div>
     )
 }
 
