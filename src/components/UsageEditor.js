@@ -17,8 +17,8 @@ const UsageEditor = ({ newUsage }) => {
     const [selectedCompany, setSelectedCompany] = useState(null);
     const navigate = useNavigate();
     const apiUrl = process.env.REACT_APP_API_URL;
-
-
+    
+    
     useEffect(() => {
         !verified && navigate('/login');
         if (!newUsage) {
@@ -34,16 +34,28 @@ const UsageEditor = ({ newUsage }) => {
                     setError(err);
                     setLoading(false);
                 });
-        } else {
-            setLoading(false);
-        }
-    }, [apiUrl, navigate, newUsage, token, usageId, verified]);
+            } else {
+                setLoading(false);
+            }
+        }, [apiUrl, navigate, newUsage, token, usageId, verified]);
 
-    const usageHandler = (e) => {
-        console.log(selectedCompany);
-
+    const usageHandler = async (e) => {
         e.preventDefault();
         const { title, description, price, date, duration, durationUnit, comment } = e.target;
+        let begin;
+        let end;
+
+        const connString = passId ? `${apiUrl}/passes/${passId}` : `${apiUrl}/passes/${usage.passId}`;
+        await axios
+            .get(connString , { headers: { authorization: token } })
+            .then(res => {
+                begin = res.data.pass.begin;
+                end = res.data.pass.end;
+            })
+            .catch(err => {
+                toast.error('Die Zeit konnte nicht verglichen werden!');
+                console.log(err);
+            });
 
         if (!selectedCompany) {
             toast.warning('Wähle eine Gesellschaft aus!');
@@ -59,6 +71,10 @@ const UsageEditor = ({ newUsage }) => {
         }
         if (!date.value) {
             toast.warning('Gib bitte ein Datum ein!');
+            return;
+        }
+        if (date.value - 1 < begin || date.value +1 > end) {
+            toast.warning('Das eingegebene Datum liegt außerhalb der Gültigkeit!');
             return;
         }
         if (!duration.value) {
@@ -166,6 +182,7 @@ const UsageEditor = ({ newUsage }) => {
                                 id="price"
                                 aria-describedby="price-helper-text border"
                                 type="number"
+                                step={0.01}
                                 defaultValue={!newUsage ? usage.price : ''}
                                 placeholder='€'
                                 className='border-b-2 p-2 text-right'
@@ -177,7 +194,7 @@ const UsageEditor = ({ newUsage }) => {
                                 id="date"
                                 aria-describedby="date-helper-text border"
                                 type="date"
-                                defaultValue={!newUsage ? format(parseISO(usage.date), dateFormat) : Date.now}
+                                defaultValue={!newUsage ? format(parseISO(usage.date), dateFormat) : ''}
                                 className='border-b-2 p-2'
                             />
                         </div>

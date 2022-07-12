@@ -1,5 +1,4 @@
-import { CreditCard, RestartAlt, Save } from '@mui/icons-material';
-import { Button, Card, CardContent, CardHeader, Container, FormControl, Input, InputLabel } from '@mui/material'
+import { ArrowBackOutlined, RestartAlt, Save } from '@mui/icons-material';
 import axios from 'axios';
 import { format, parseISO } from 'date-fns';
 import React, { useContext, useEffect, useState } from 'react'
@@ -143,10 +142,11 @@ const PassEditor = ({ newPass }) => {
                         />
                     </div>
                 </div>
-                <Container sx={{ width: 1, display: 'flex', justifyContent: 'space-between' }}>
-                    <Button type="reset" variant="contained" color="error"><CreditCard /> <RestartAlt /></Button>
-                    <Button type="submit" variant="contained" color="success"><CreditCard /> <Save /></Button>
-                </Container>
+                <div className="flex justify-around my-3">
+                        <button type="button" onClick={() => navigate(-1)} className="p-2 w-20 rounded shadow-md border border-red-600 bg-white text-red-600"><ArrowBackOutlined /></button>
+                        <button type="submit" className="p-2 w-20 rounded shadow-md bg-green-700 text-white"><Save /></button>
+                        <button type="reset" className="p-2 w-20 rounded shadow-md bg-red-600 text-white"> <RestartAlt /></button>
+                    </div>
             </form>
         </div>
     )

@@ -30,7 +30,7 @@ const UsageTableCompanyField = ({ usage }) => {
     if (loading) { return <td>Loading...</td> }
 
     return (
-        <td id={usage._id} className='p-3 overflow-hidden'>{company.title.substring(0, 32)}</td>
+        <td id={usage._id} className='px-1 py-3 overflow-hidden'>{company.title.substring(0, 28)}...</td>
     )
 }
 
