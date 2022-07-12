@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import { authContext } from '../context/authContext';
 import UsageTableCompanyField from './UsageTableCompanyField';
 
-const UsagesTable = () => {
+const UsagesTable = ({ newUsageHandler }) => {
     const { passId } = useParams();
     const { token, verified } = useContext(authContext);
     const [loading, setLoading] = useState(true);
@@ -36,7 +36,7 @@ const UsagesTable = () => {
 
     const usageDetailHandler = (e) => {
         const { id } = e.target;
-        navigate(`/usage/${id}`);
+        navigate(`/usages/edit/${id}`);
     }
 
     if (loading) { return <h2>Loading...</h2> }
@@ -45,7 +45,17 @@ const UsagesTable = () => {
     return (
         <>
             <div className='rounded-md shadow-md bg-white'>
-                <h3 className='text-center font-bold text-xl my-3'>Nutzungen</h3>
+                <div className='flex justify-between p-2 items-center'>
+                    <div></div>
+                    <h3 className='text-center font-bold text-xl my-3'>Nutzungen</h3>
+                    <button
+                        type='button'
+                        onClick={newUsageHandler}
+                        className='w-10 h-10 flex justify-center items-center rounded-full shadow-md text-white bg-blue-500 text-4xl'
+                    >
+                        +
+                    </button>
+                </div>
                 <div className='flex clex justify-center gap-3'>
                     <table className='table-auto min-w-full rounded-t-xl'>
                         <thead className='bg-slate-200 border-b-4 rounded-lg text-left'>

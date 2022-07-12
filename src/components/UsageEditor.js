@@ -1,4 +1,4 @@
-import { Delete, RestartAlt, Save } from '@mui/icons-material';
+import { ArrowBack, Delete, RestartAlt, Save } from '@mui/icons-material';
 import axios from 'axios';
 import { format, parseISO } from 'date-fns';
 import { useContext, useEffect, useState } from 'react'
@@ -10,11 +10,11 @@ import CompanyDropDown from './CompanyDropDown';
 const UsageEditor = ({ newUsage }) => {
     const { dateFormat, user, verified, token } = useContext(authContext);
     const { passId } = useParams();
+    const { usageId } = useParams();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [usage, setUsage] = useState(null);
     const [selectedCompany, setSelectedCompany] = useState(null);
-    const { usageId } = useParams();
     const navigate = useNavigate();
     const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -25,7 +25,6 @@ const UsageEditor = ({ newUsage }) => {
             axios
                 .get(`${apiUrl}/usages/${usageId}`, { headers: { authorization: token } })
                 .then(res => {
-                    console.log(res.data.usage);
                     setUsage(res.data.usage);
                     setLoading(false);
                 })
@@ -82,7 +81,7 @@ const UsageEditor = ({ newUsage }) => {
                 price: price.value,
                 date: new Date(date.value),
                 duration: duration.value,
-                durationoUnit: durationUnit.value,
+                durationUnit: durationUnit.value,
                 comment: comment.value
             }
         }
@@ -90,7 +89,7 @@ const UsageEditor = ({ newUsage }) => {
         newUsage && axios
             .post(`${apiUrl}/usages/pass/${passId}`, usageToReq, { headers: { authorization: token } })
             .then(res => {
-                navigate(`/usages/edit/${res.data.usage._id}`)
+                navigate(-1);
                 toast.success('Die Nutzung wurde erfolgreich angelegt!');
             })
             .catch(err => {
@@ -99,9 +98,9 @@ const UsageEditor = ({ newUsage }) => {
             });
 
         !newUsage && axios
-            .put(`${apiUrl}/usages/${usageId._id}`, usageToReq, { headers: { authorization: token } })
+            .put(`${apiUrl}/usages/${usage._id}`, usageToReq, { headers: { authorization: token } })
             .then(res => {
-                console.log(res.data);
+                navigate(-1);
                 toast.success('Die Nutzung wurde erfolgreich geändert!');
             })
             .catch(err => {
@@ -111,6 +110,16 @@ const UsageEditor = ({ newUsage }) => {
     }
 
     const deleteHandler = () => {
+        axios
+            .delete(`${apiUrl}/usages/${usage._id}`, { headers: { authorization: token } })
+            .then(res => {
+                navigate(-1);
+                toast.success('Die Nutzung wurde erfolgreich gelöscht!')
+            })
+            .catch(err => {
+                toast('Die Nutzung konnte nicht gelöscht werden!');
+                console.log(err);
+            });
 
     }
 
@@ -129,7 +138,7 @@ const UsageEditor = ({ newUsage }) => {
                     <Delete /></button>}
             </div>
             <div className="w-[85%] mx-auto py-3 my-3">
-                <CompanyDropDown selectedCompany={selectedCompany} setSelectedCompany={setSelectedCompany} />
+                <CompanyDropDown selectedCompany={selectedCompany} setSelectedCompany={setSelectedCompany} usage={usage} />
                 <form onSubmit={usageHandler} className='flex flex-col gap-5'>
                     <div className="flex flex-col">
                         <label htmlFor="title" className="text-xs">Titel</label>
@@ -150,38 +159,39 @@ const UsageEditor = ({ newUsage }) => {
                             className='border-b-2 p-2'
                         />
                     </div>
-                    <div className="flex flex-col">
-                        <label htmlFor="price" className="text-xs">Ticketpreis</label>
-                        <input
-                            id="price"
-                            aria-describedby="price-helper-text border"
-                            type="number"
-                            defaultValue={!newUsage ? usage.price : ''}
-                            className='border-b-2 p-2'
-                        />
-                    </div>
-                    <div className="flex flex-col">
-                        <label htmlFor="date" className="text-xs">Datum</label>
-                        <input
-                            id="date"
-                            aria-describedby="date-helper-text border"
-                            type="date"
-                            defaultValue={!newUsage ? format(parseISO(usage.date), dateFormat) : Date.now}
-                            className='border-b-2 p-2'
-                        />
-                    </div>
-                    <div className='flex gap-3'>
-                        <div className="flex flex-col w-full">
+                    <div className='flex gap-3 justify-between'>
+                        <div className="flex flex-col w-1/6">
+                            <label htmlFor="price" className="text-xs">Ticketpreis</label>
+                            <input
+                                id="price"
+                                aria-describedby="price-helper-text border"
+                                type="number"
+                                defaultValue={!newUsage ? usage.price : ''}
+                                placeholder='€'
+                                className='border-b-2 p-2 text-right'
+                            />
+                        </div>
+                        <div className="flex flex-col w-2/5">
+                            <label htmlFor="date" className="text-xs">Datum</label>
+                            <input
+                                id="date"
+                                aria-describedby="date-helper-text border"
+                                type="date"
+                                defaultValue={!newUsage ? format(parseISO(usage.date), dateFormat) : Date.now}
+                                className='border-b-2 p-2'
+                            />
+                        </div>
+                        <div className="flex flex-col w-1/6">
                             <label htmlFor="duration" className="text-xs">Dauer</label>
                             <input
                                 id="duration"
                                 aria-describedby="duration-helper-text border"
                                 type="number"
                                 defaultValue={!newUsage ? usage.duration : ''}
-                                className='border-b-2 p-2'
+                                className='border-b-2 p-2 text-right'
                             />
                         </div>
-                        <div className="flex flex-col w-8">
+                        <div className="flex flex-col w-1/6">
                             <label htmlFor='durationUnit' className='text-xs'>Einheit</label>
                             <input
                                 id='durationUnit'
@@ -202,8 +212,9 @@ const UsageEditor = ({ newUsage }) => {
                         />
                     </div>
                     <div className="flex justify-around my-3">
-                        <button type="reset" className="p-2 w-20 rounded shadow bg-red-600 text-white"> <RestartAlt /></button>
-                        <button type="submit" className="p-2 w-20 rounded shadow bg-green-700 text-white"><Save /></button>
+                        <button type="button" onClick={() => navigate(-1)} className="p-2 w-20 rounded shadow-md border border-red-600 bg-white text-red-600"><ArrowBack /></button>
+                        <button type="submit" className="p-2 w-20 rounded shadow-md bg-green-700 text-white"><Save /></button>
+                        <button type="reset" className="p-2 w-20 rounded shadow-md bg-red-600 text-white"> <RestartAlt /></button>
                     </div>
                 </form>
             </div>
