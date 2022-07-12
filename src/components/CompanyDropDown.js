@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { authContext } from "../context/authContext";
 
-const CompanyDropDown = ({ selectedCompany, setSelectedCompany }) => {
-    const { dateFormat, token } = useContext(authContext);
+const CompanyDropDown = ({ usage, selectedCompany, setSelectedCompany }) => {
+    const { token } = useContext(authContext);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [companies, setCompanies] = useState(null);
@@ -20,6 +20,14 @@ const CompanyDropDown = ({ selectedCompany, setSelectedCompany }) => {
             .get(`${apiUrl}/companies`, { headers: { authorization: token } })
             .then(res => {
                 setCompanies(res.data.companies);
+
+                const setInitial = async (companyId) => {
+                    const com = await res.data.companies.find(cm => cm._id === companyId);
+                    await setSelectedCompany(com);
+                }
+
+                usage && setInitial(usage.companyId);
+
                 setLoading(false);
             })
             .catch(err => {
@@ -28,7 +36,7 @@ const CompanyDropDown = ({ selectedCompany, setSelectedCompany }) => {
                 setError(err);
                 setLoading(false);
             });
-    }, [apiUrl, navigate, token]);
+    }, [apiUrl, navigate, setSelectedCompany, token, usage]);
 
     const toggleOpenHandler = () => {
         setIsOpen(!isOpen);
@@ -59,7 +67,7 @@ const CompanyDropDown = ({ selectedCompany, setSelectedCompany }) => {
                 {!isOpen ? <ArrowDropDown /> : <ArrowDropUp />}
             </button>
             <div>
-                <div className="absolute border shadow-md rounded-md bg-white divide-y" hidden={!isOpen}>
+                <div className="absolute w-[85%] border shadow-md rounded-md bg-white divide-y" hidden={!isOpen}>
                     {
                         companies && companies.map(company => {
                             return <button

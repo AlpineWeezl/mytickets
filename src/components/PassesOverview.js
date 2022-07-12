@@ -1,3 +1,4 @@
+import { ArrowBack, Edit } from '@mui/icons-material';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
@@ -45,8 +46,17 @@ const PassesOverview = () => {
     return (
         <>
             <div className='flex flex-col justify-center items-center'>
-                <div className='w-full bg-white shadow-md text-center py-3'>
-                    <h3 className='font-bold text-xl'>Meine Pässe</h3>
+                <div className='fixed flex justify-between items-center top-0 w-full shadow-md bg-white p-4'>
+                    <button type="button" onClick={() => navigate(-1)} className="p-2 w-20 rounded shadow-md border border-red-600 bg-white text-red-600"><ArrowBack /></button>
+                    <h2 className='text-center font-bold text-2xl'>
+                        {
+                            (user.firstname.substring(user.firstname.length - 1, user.firstname.length) !== 's') ?
+                                (`${user.firstname}'s Pässe`)
+                                :
+                                (`${user.firstname.substring(0, user.firstname.length - 1)}s' Pässe`)
+                        }
+                    </h2>
+                    <div></div>
                 </div>
                 <button
                     onClick={newPassHandler}
@@ -55,7 +65,7 @@ const PassesOverview = () => {
                 >
                     +
                 </button>
-                <div className='flex flex-col items-center gap-2 pt-2 pb-16 px-2 w-full'>
+                <div className='flex flex-col items-center gap-2 pt-24 pb-16 px-2 w-full'>
                     {
 
                         (passes) && passes.map(pass => {
