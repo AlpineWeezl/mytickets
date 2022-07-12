@@ -6,12 +6,14 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { authContext } from '../context/authContext';
+import AssociationDropDown from './AssociationDropDown';
 
 const PassEditor = ({ newPass }) => {
     const { user, verified, token } = useContext(authContext);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [pass, setPass] = useState(null);
+    const [selectedAssociation, setSelectedAssociation] = useState(null);
     const { passId } = useParams();
     const navigate = useNavigate();
     const apiUrl = process.env.REACT_APP_API_URL;
@@ -40,6 +42,10 @@ const PassEditor = ({ newPass }) => {
     const passHandler = (e) => {
         e.preventDefault();
         const { title, price, begin, end } = e.target;
+        if (!selectedAssociation) {
+            toast.warning('Wähle bitte einen Verbund aus!');
+            return;
+        }
         if (!title.value) {
             toast.warning('Gib bitte einen Titel ein!');
             return;
@@ -96,7 +102,8 @@ const PassEditor = ({ newPass }) => {
             <div className='text-center font-bold text-2xl my-5'>
                 <h2>{`${!newPass ? pass.title : 'Neue Karte erstellen'}`}</h2>
             </div>
-            <hr className='border-2 border-black'/>
+            <hr className='border-2 border-black' />
+            <AssociationDropDown pass={pass} selectedAssociation={selectedAssociation} setSelectedAssociation={setSelectedAssociation} />
             <form onSubmit={passHandler} className='flex flex-col gap-3 py-5'>
                 <div className='flex flex-col'>
                     <label htmlFor='title' className='text-xs'>Titel</label>
