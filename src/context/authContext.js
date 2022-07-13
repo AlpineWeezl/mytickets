@@ -9,6 +9,7 @@ const AuthProvider = ({ children }) => {
     const imgPlaceholder = 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.schuler-rohstoff.de%2Fwp-content%2Fuploads%2F2015%2F09%2Fplatzhalter.jpg&f=1&nofb=1'
     const apiUrl = process.env.REACT_APP_API_URL;
     const [processing, setProcessing] = useState(true);
+    const [error, setError] = useState(null);
     const [user, setUser] = useState(null);
     const [userId, setUserId] = useState(null);
     const [searchString, setSearchString] = useState(null);
@@ -30,19 +31,15 @@ const AuthProvider = ({ children }) => {
                 )
                 .then(res => {
                     setUserId(res.data.user._id);
+                    setUser(res.data.user);
                     setVerified(true);
-                    axios
-                        .get(`${apiUrl}/users/${res.data.user._id}`, { headers: { authorization: token } })
-                        .then(res => {
-                            setUser(res.data.user)
-                            setProcessing(false);
-                        })
-                        .catch(err => toast.error('Fehler'));
+                    setProcessing(false);
                 })
                 .catch(err => {
                     setVerified(false);
                     setProcessing(false);
-                    toast.error('Auth Fehler')
+                    toast.error('Auth Fehler');
+                    setError(err);
                 });
         } else {
             setProcessing(false);
@@ -51,13 +48,13 @@ const AuthProvider = ({ children }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [apiUrl]);
 
-    if (!processing) {
+    // if (!processing) {
         return (
             <authContext.Provider value={{ setVerified, verified, setUserId, userId, user, setUser, token, setToken, imgPlaceholder, searchString, setSearchString, dateFormat, setDateFormat }}>
                 {children}
             </authContext.Provider>
         );
-    }
+    // }
 };
 
 export default AuthProvider;

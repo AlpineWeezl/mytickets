@@ -1,4 +1,4 @@
-import { ArrowBackOutlined, RestartAlt, Save } from '@mui/icons-material';
+import { ArrowBackOutlined, Delete, RestartAlt, Save } from '@mui/icons-material';
 import axios from 'axios';
 import { format, parseISO } from 'date-fns';
 import React, { useContext, useEffect, useState } from 'react'
@@ -95,13 +95,44 @@ const PassEditor = ({ newPass }) => {
             });
     }
 
+    const deleteHandler = () => {
+        axios
+            .delete(`${apiUrl}/usages/passes/${pass._id}`, { headers: { authorization: token } })
+            .then(res => {
+                toast.success('Die zugehörigen Nutzungen wurden erfgolgreich gelöscht.')
+            })
+            .catch(err => {
+                toast.error('Die zugehörigen Nutzungen konnten nicht gelöscht werden!');
+            });
+
+        axios
+            .delete(`${apiUrl}/passes/${pass._id}`, { headers: { authorization: token } })
+            .then(res => {
+                navigate(`/passes/user/${user._id}`);
+                toast.success('Der Pass wurde erfolgreich gelöscht!')
+            })
+            .catch(err => {
+                toast.error('Der Pass konnte nicht gelöscht werden!');
+                console.log(err);
+            });
+    }
+
     if (error || (!newPass && !pass)) { return <h3>Error...</h3> }
     if (loading || (!newPass && !pass)) { return <h3>Loading...</h3> }
 
     return (
         <div className='bg-white p-2 shadow-md'>
-            <div className='text-center font-bold text-2xl my-5'>
+            <div className='flex flex-col items-center gap-3 font-bold text-2xl my-5'>
                 <h2>{`${!newPass ? pass.title : 'Neue Karte erstellen'}`}</h2>
+                {
+                    !newPass && <button
+                        type="button"
+                        onClick={deleteHandler}
+                        className='flex justify-center items-center w-12 h-12 rounded-full bg-red-500 text-white shadow'
+                    >
+                        <Delete />
+                    </button>
+                }
             </div>
             <hr className='border-2 border-black' />
             <AssociationDropDown pass={pass} selectedAssociation={selectedAssociation} setSelectedAssociation={setSelectedAssociation} />
