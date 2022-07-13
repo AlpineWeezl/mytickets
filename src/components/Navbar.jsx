@@ -1,5 +1,5 @@
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
-import { RestoreOutlined, Favorite, Person, Add, CreditCardSharp, Login } from '@mui/icons-material';
+import { RestoreOutlined, Favorite, Person, CreditCardSharp, Login } from '@mui/icons-material';
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authContext } from "../context/authContext";
