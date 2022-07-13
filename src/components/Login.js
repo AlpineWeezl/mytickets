@@ -11,8 +11,11 @@ const Login = () => {
     const navigator = useNavigate();
 
     useEffect(() => {
-       verified && navigator(`/profile`);
-    }, [navigator, verified]);
+        if (verified && user) {
+            toast.success('Anmeldung erfolgreich!');
+            navigator(`/profile`);
+        };
+    }, [navigator, user, verified]);
 
     const loginHandler = (e) => {
         e.preventDefault();
@@ -34,8 +37,6 @@ const Login = () => {
                 setUser(res.data.user);
                 setToken(res.headers.authorization);
                 setVerified(true);
-                toast.success('Anmeldung erfolgreich!');
-                navigator(`/profile`)
             })
             .catch(err => {
                 toast.error('Anmeldung nicht möglich!')

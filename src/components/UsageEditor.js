@@ -17,8 +17,8 @@ const UsageEditor = ({ newUsage }) => {
     const [selectedCompany, setSelectedCompany] = useState(null);
     const navigate = useNavigate();
     const apiUrl = process.env.REACT_APP_API_URL;
-    
-    
+
+
     useEffect(() => {
         !verified && navigate('/login');
         if (!newUsage) {
@@ -34,10 +34,10 @@ const UsageEditor = ({ newUsage }) => {
                     setError(err);
                     setLoading(false);
                 });
-            } else {
-                setLoading(false);
-            }
-        }, [apiUrl, navigate, newUsage, token, usageId, verified]);
+        } else {
+            setLoading(false);
+        }
+    }, [apiUrl, navigate, newUsage, token, usageId, verified]);
 
     const usageHandler = async (e) => {
         e.preventDefault();
@@ -47,7 +47,7 @@ const UsageEditor = ({ newUsage }) => {
 
         const connString = passId ? `${apiUrl}/passes/${passId}` : `${apiUrl}/passes/${usage.passId}`;
         await axios
-            .get(connString , { headers: { authorization: token } })
+            .get(connString, { headers: { authorization: token } })
             .then(res => {
                 begin = res.data.pass.begin;
                 end = res.data.pass.end;
@@ -73,7 +73,7 @@ const UsageEditor = ({ newUsage }) => {
             toast.warning('Gib bitte ein Datum ein!');
             return;
         }
-        if (date.value - 1 < begin || date.value +1 > end) {
+        if (date.value - 1 < begin || date.value + 1 > end) {
             toast.warning('Das eingegebene Datum liegt außerhalb der Gültigkeit!');
             return;
         }
@@ -147,11 +147,15 @@ const UsageEditor = ({ newUsage }) => {
             <div className="flex flex-col justify-center items-center py-3 border-b-2 border-black text-center">
                 <h2 className="text-2xl my-3">{newUsage ? 'Neue Nutzung anlegen' : `${usage.title} ändern`}</h2>
                 {user.price && (<h3 className="text-xl my-2">({user.username})</h3>)}
-                {!newUsage && <button
-                    type="button"
-                    onClick={deleteHandler}
-                    className='flex justify-center items-center w-12 h-12 rounded-full bg-red-500 text-white shadow'>
-                    <Delete /></button>}
+                {
+                    !newUsage && <button
+                        type="button"
+                        onClick={deleteHandler}
+                        className='flex justify-center items-center w-12 h-12 rounded-full bg-red-500 text-white shadow'
+                    >
+                        <Delete />
+                    </button>
+                }
             </div>
             <div className="w-[85%] mx-auto py-3 my-3">
                 <CompanyDropDown selectedCompany={selectedCompany} setSelectedCompany={setSelectedCompany} usage={usage} />
@@ -231,7 +235,7 @@ const UsageEditor = ({ newUsage }) => {
                     <div className="flex justify-around my-3">
                         <button type="button" onClick={() => navigate(-1)} className="p-2 w-20 rounded shadow-md border border-red-600 bg-white text-red-600"><ArrowBack /></button>
                         <button type="submit" className="p-2 w-20 rounded shadow-md bg-green-700 text-white"><Save /></button>
-                        <button type="reset" className="p-2 w-20 rounded shadow-md bg-red-600 text-white"> <RestartAlt /></button>
+                        <button type="reset" onClick={() => setSelectedCompany((!usage) && null)} className="p-2 w-20 rounded shadow-md bg-red-600 text-white"> <RestartAlt /></button>
                     </div>
                 </form>
             </div>

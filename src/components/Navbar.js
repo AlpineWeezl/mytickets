@@ -32,15 +32,14 @@ const Navbar = () => {
                 showLabels
                 value={value}
                 onChange={(event, newValue) => {
-                    console.log(newValue);
                     setValue(newValue);
                     navigator(newValue);
                 }}
                 >
-                {verified && <BottomNavigationAction label="Profil" icon={<Person />} value={'/profile'} />}
-                {verified && <BottomNavigationAction label="Zeitkarten" icon={<CreditCardSharp />} value={`/passes/user/${user._id}`} />}
-                {verified && <BottomNavigationAction label="Nutzungen" icon={<RestoreOutlined />} value={'/usages'} />}
-                {verified && <BottomNavigationAction label="Favoriten" icon={<Favorite />} value={'/favorites'} />}
+                {(verified && user) && <BottomNavigationAction label="Profil" icon={<Person />} value={'/profile'} />}
+                {(verified && user) && <BottomNavigationAction label="Zeitkarten" icon={<CreditCardSharp />} value={`/passes/user/${user._id}`} />}
+                {(verified && user) && <BottomNavigationAction label="Nutzungen" icon={<RestoreOutlined />} value={'/usages'} />}
+                {(verified && user) && <BottomNavigationAction label="Favoriten" icon={<Favorite />} value={'/favorites'} />}
                 {!verified && <BottomNavigationAction label="Login" icon={<Login />} value={'/login'} />}
             </BottomNavigation>
         </Paper>
