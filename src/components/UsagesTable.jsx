@@ -2,14 +2,13 @@ import axios from 'axios';
 import { format, parseISO } from 'date-fns';
 import { useEffect, useState } from 'react'
 import { useContext } from 'react';
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import { authContext } from '../context/authContext';
 import UsageTableCompanyField from './UsageTableCompanyField';
 
-const UsagesTable = ({ newUsageHandler }) => {
-    const { passId } = useParams();
-    const { token, verified } = useContext(authContext);
+const UsagesTable = ({ newUsageHandler, pass }) => {
+    const { token } = useContext(authContext);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [usages, setUsages] = useState(null);
@@ -17,9 +16,8 @@ const UsagesTable = ({ newUsageHandler }) => {
     const apiUrl = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
-        !verified && navigate('/login');
         axios
-            .get(`${apiUrl}/usages/pass/${passId}`, {
+            .get(`${apiUrl}/usages/pass/${pass._id}`, {
                 headers: {
                     authorization: token
                 }
@@ -32,7 +30,7 @@ const UsagesTable = ({ newUsageHandler }) => {
                 setError(err);
                 toast.error('Die Pass Details konnten nicht geladen werden!')
             });
-    }, [apiUrl, navigate, passId, token, verified]);
+    }, [apiUrl, navigate, pass, token]);
 
     const usageDetailHandler = (e) => {
         const { id } = e.target;

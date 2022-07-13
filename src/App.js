@@ -9,6 +9,7 @@ import PassesOverview from './components/PassesOverview.jsx';
 import Profile from './components/Profile.jsx';
 import UsageDetails from './components/UsageDetails.jsx';
 import UsageEditor from './components/UsageEditor.jsx';
+import UsagesOverview from './components/UsagesOverview';
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
                     <Route path={'/passes/:passId'} element={<PassDetails />} />
                     <Route path={'/passes/user/:userId'} element={<PassesOverview />} />
                     <Route path={'/passes/edit/:passId'} element={<PassEditor newPass={false} />} />
+                    <Route path={'/usages'} element={<UsagesOverview />} />
                     <Route path={'/usages/new/:passId'} element={<UsageEditor newUsage={true} />} />
                     <Route path={'/usages/:passId'} element={<UsageDetails />} />
                     <Route path={'/usages/user/:userId'} element={<UsageDetails />} />

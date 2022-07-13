@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { authContext } from "../context/authContext";
 
 const Profile = () => {
-    const { verified, setVerified, user, setUser, token, setToken, userId } = useContext(authContext);
+    const { verified, setVerified, user, setUser, token, setToken } = useContext(authContext);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const apiUrl = process.env.REACT_APP_API_URL;
@@ -14,6 +14,7 @@ const Profile = () => {
 
     useEffect(() => {
         (!verified || !token) && navigate('/login');
+        setError(null);
     }, [navigate, token, user, verified]);
 
     const updateHandler = (e) => {

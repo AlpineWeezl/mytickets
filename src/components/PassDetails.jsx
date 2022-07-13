@@ -59,7 +59,7 @@ const PassDetails = () => {
             <div className='flex flex-col gap-5 my-24 mx-2'>
                 <TimeAnalyzeCard pass={pass} />
                 <UsageAnalyzeCard pass={pass} />
-                <UsagesTable newUsageHandler={newUsageHandler} />
+                <UsagesTable newUsageHandler={newUsageHandler} pass={pass} />
             </div>
         </>
     )
