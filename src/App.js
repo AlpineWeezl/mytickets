@@ -1,14 +1,14 @@
 import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import './App.css';
-import Login from './components/Login';
-import Navbar from './components/Navbar';
-import PassDetails from './components/PassDetails';
-import PassEditor from './components/PassEditor';
-import PassesOverview from './components/PassesOverview';
-import Profile from './components/Profile';
-import UsageDetails from './components/UsageDetails';
-import UsageEditor from './components/UsageEditor';
+import Login from './components/Login.jsx';
+import Navbar from './components/Navbar.jsx';
+import PassDetails from './components/PassDetails.jsx';
+import PassEditor from './components/PassEditor.jsx';
+import PassesOverview from './components/PassesOverview.jsx';
+import Profile from './components/Profile.jsx';
+import UsageDetails from './components/UsageDetails.jsx';
+import UsageEditor from './components/UsageEditor.jsx';
 
 function App() {
     return (
