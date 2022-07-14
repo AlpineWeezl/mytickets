@@ -14,8 +14,13 @@ const TimeAnalyzeCard = ({ pass }) => {
         const loadTimeData = async () => {
             try {
                 const { begin, end } = pass;
-                setTimeProgress(Math.round((new Date(end) - new Date()) / (new Date(end) - new Date(begin)) * 10000, 2) / 100);
-                setDaysLeft(Math.round((new Date(end) - new Date()) / (3600 * 24 * 1000)));
+                const calculatedTimeProgress = Math.round((new Date(end) - new Date()) / (new Date(end) - new Date(begin)) * 10000, 2) / 100;
+                (calculatedTimeProgress < 0) && setTimeProgress(0);
+                (calculatedTimeProgress > 100) && setTimeProgress(100);
+                (calculatedTimeProgress >= 0 && calculatedTimeProgress <= 100) && setTimeProgress(timeProgress);
+                (new Date() > new Date(end)) && setDaysLeft(0);
+                (new Date() < new Date(begin)) && setDaysLeft(Math.round(new Date(end) - new Date(begin) / (3600 * 24 * 1000)));
+                (new Date() >= new Date(begin) && new Date() <= new Date(end)) && setDaysLeft(Math.round((new Date(end) - new Date()) / (3600 * 24 * 1000)));
                 setLoading(false);
             } catch (err) {
                 console.log(err);
@@ -25,7 +30,7 @@ const TimeAnalyzeCard = ({ pass }) => {
         }
         loadTimeData();
 
-    }, [pass]);
+    }, [pass, timeProgress]);
 
     if (loading) { return <h2>Loading...</h2> }
     if (error) { return <h2>Error...</h2> }
