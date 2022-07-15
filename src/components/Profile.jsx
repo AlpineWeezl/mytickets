@@ -4,9 +4,11 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { authContext } from "../context/authContext";
+import LoaderPage from "./LoaderPage";
 
 const Profile = () => {
     const { verified, setVerified, user, setUser, token, setToken } = useContext(authContext);
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const apiUrl = process.env.REACT_APP_API_URL;
@@ -14,6 +16,7 @@ const Profile = () => {
 
     useEffect(() => {
         (!verified || !token) && navigate('/login');
+        user && setIsLoading(false);
         setError(null);
     }, [navigate, token, user, verified]);
 
@@ -80,6 +83,7 @@ const Profile = () => {
     }
 
     if (error) { return <h3>Error...</h3> }
+    if (isLoading) { return (<LoaderPage />) }
 
     return (
         (verified && (

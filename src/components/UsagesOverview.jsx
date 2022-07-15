@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { authContext } from "../context/authContext";
+import LoaderPage from "./LoaderPage";
 import UsagesPassDropdown from "./UsagesCardDropdown";
 
 const UsagesOverview = () => {
@@ -32,7 +33,7 @@ const UsagesOverview = () => {
     }, [apiUrl, navigate, token, user, verified]);
 
     if (error) { return <h3>Error...</h3> }
-    if (loading) { return <h3>Loading...</h3> }
+    if (loading) { return <LoaderPage /> }
 
     return (
         <div className="flex flex-col bg-white p-2">

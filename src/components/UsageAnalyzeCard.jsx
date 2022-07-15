@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { CircularProgressbar } from "react-circular-progressbar"
 import { toast } from "react-toastify";
 import { authContext } from "../context/authContext";
+import LoaderAnalyzeCards from "./LoaderAnalyzeCards";
 
 const UsageAnalyzeCard = ({ pass }) => {
     const { token } = useContext(authContext);
@@ -41,7 +42,7 @@ const UsageAnalyzeCard = ({ pass }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [apiUrl, pass, token]);
 
-    if (loading) { return <h2>Loading...</h2> }
+    if (loading) { return <LoaderAnalyzeCards />}
     if (error) { return <h2>Error...</h2> }
 
     return (

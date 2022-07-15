@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { authContext } from '../context/authContext';
 import CompanyDropDown from './CompanyDropDown';
+import LoaderPage from './LoaderPage';
 
 const UsageEditor = ({ newUsage }) => {
     const { dateFormat, user, verified, token } = useContext(authContext);
@@ -140,7 +141,7 @@ const UsageEditor = ({ newUsage }) => {
     }
 
     if (error || (!newUsage && !usage)) { return <h3>Error...</h3> }
-    if (loading || (!newUsage && !usage)) { return <h3>Loading...</h3> }
+    if (loading || (!newUsage && !usage)) { return <LoaderPage /> }
 
     return (
         <div className="bg-white rounded-md shadow-md mb-14 z-0">

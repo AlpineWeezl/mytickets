@@ -6,6 +6,8 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import { authContext } from '../context/authContext';
+import LoaderPage from './LoaderPage';
+import LoaderTableContent from './LoaderTableContent';
 import UsageTableCompanyField from './UsageTableCompanyField';
 
 const UsagesTable = ({ newUsageHandler, pass }) => {
@@ -38,7 +40,7 @@ const UsagesTable = ({ newUsageHandler, pass }) => {
         navigate(`/usages/edit/${id}`);
     }
 
-    if (loading) { return <h2>Loading...</h2> }
+    if (loading) { return <LoaderPage /> }
     if (error) { return <h2>Error...</h2> }
 
     return (
@@ -69,10 +71,27 @@ const UsagesTable = ({ newUsageHandler, pass }) => {
                             {
                                 usages.map((usage, i) => {
                                     return (
-                                        <tr key={usage._id} id={usage._id} onClick={usageDetailHandler} className={`border-b ${(i % 2 !== 0) && 'bg-slate-50'}`}>
-                                            <td id={usage._id} name={usage._id} className='pl-2'>{format(parseISO(usage.date), 'yyyy-MM-dd')}</td>
+                                        <tr
+                                            key={usage._id}
+                                            id={usage._id}
+                                            onClick={usageDetailHandler}
+                                            className={`border-b ${(i % 2 !== 0) && 'bg-slate-50'}`}
+                                        >
+                                            <td
+                                                id={usage._id}
+                                                name={usage._id}
+                                                className='pl-2'
+                                            >
+                                                {format(parseISO(usage.date), 'yyyy-MM-dd') || <LoaderTableContent />}
+                                            </td>
                                             <UsageTableCompanyField usage={usage} />
-                                            <td id={usage._id} name={usage._id} className='text-right pr-2'>{parseFloat(usage.price).toFixed(2)}</td>
+                                            <td
+                                                id={usage._id}
+                                                name={usage._id}
+                                                className='text-right pr-2'
+                                            >
+                                                {parseFloat(usage.price).toFixed(2) || <LoaderTableContent />}
+                                            </td>
                                         </tr>
                                     )
                                 })
