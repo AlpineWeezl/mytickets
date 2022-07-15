@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { authContext } from '../context/authContext';
 import AssociationDropDown from './AssociationDropDown';
+import LoaderPage from './LoaderPage';
 
 const PassEditor = ({ newPass }) => {
     const { user, verified, token } = useContext(authContext);
@@ -118,7 +119,7 @@ const PassEditor = ({ newPass }) => {
     }
 
     if (error || (!newPass && !pass)) { return <h3>Error...</h3> }
-    if (loading || (!newPass && !pass)) { return <h3>Loading...</h3> }
+    if (loading || (!newPass && !pass)) { return <LoaderPage /> }
 
     return (
         <div className='bg-white p-2 shadow-md'>

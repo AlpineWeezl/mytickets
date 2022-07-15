@@ -5,6 +5,7 @@ import { useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import { authContext } from '../context/authContext';
+import LoaderPage from './LoaderPage';
 import TimeAnalyzeCard from './TimeAnalyzeCard';
 import UsageAnalyzeCard from './UsageAnalyzeCard';
 import UsagesTable from './UsagesTable';
@@ -45,7 +46,7 @@ const PassDetails = () => {
         navigate(`/passes/edit/${passId}`);
     }
 
-    if (loading) { return <h2>Loading...</h2> }
+    if (loading) { return <LoaderPage /> }
     if (error) { return <h2>Error...</h2> }
 
 
