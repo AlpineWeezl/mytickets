@@ -47,7 +47,7 @@ const UsagesTable = ({ newUsageHandler, pass }) => {
         <>
             <div className='rounded-md shadow-md bg-white'>
                 <div className='flex justify-between p-2 items-center'>
-                    <div></div>
+                    <div className='w-10 h-10'></div>
                     <h3 className='text-center font-bold text-xl my-3'>Nutzungen ({usages.length})</h3>
                     <button
                         type='button'

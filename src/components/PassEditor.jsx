@@ -118,12 +118,19 @@ const PassEditor = ({ newPass }) => {
             });
     }
 
-    if (error || (!newPass && !pass)) { return <h3>Error...</h3> }
     if (loading || (!newPass && !pass)) { return <LoaderPage /> }
-
+    if (error || (!newPass && !pass)) { return <h3>Error...</h3> }
+    
     return (
         <div className='bg-white p-2 shadow-md'>
-            <div className='flex flex-col items-center gap-3 font-bold text-2xl my-5'>
+            <div className='flex justify-between items-center gap-3 font-bold text-2xl my-5'>
+                <button
+                    type="button"
+                    onClick={() => navigate(-1)}
+                    className="flex justify-center items-center p-2 w-14 h-14 rounded-full shadow-md border-2 border-red-600 bg-white text-red-600"
+                >
+                    <ArrowBackOutlined fontSize='large'/>
+                </button>
                 <h2>{`${!newPass ? pass.title : 'Neue Karte erstellen'}`}</h2>
                 {
                     !newPass && <button
@@ -131,7 +138,7 @@ const PassEditor = ({ newPass }) => {
                         onClick={deleteHandler}
                         className='flex justify-center items-center w-12 h-12 rounded-full bg-red-500 text-white shadow'
                     >
-                        <Delete />
+                        <Delete fontSize='large' />
                     </button>
                 }
             </div>
@@ -177,9 +184,8 @@ const PassEditor = ({ newPass }) => {
                     </div>
                 </div>
                 <div className="flex justify-around my-3">
-                    <button type="button" onClick={() => navigate(-1)} className="p-2 w-20 rounded shadow-md border border-red-600 bg-white text-red-600"><ArrowBackOutlined /></button>
-                    <button type="submit" className="p-2 w-20 rounded shadow-md bg-green-700 text-white"><Save /></button>
-                    <button type="reset" className="p-2 w-20 rounded shadow-md bg-red-600 text-white"> <RestartAlt /></button>
+                    <button type="reset" className="p-2 w-20 rounded shadow-md bg-red-600 text-white"> <RestartAlt fontSize='large' /></button>
+                    <button type="submit" className="p-2 w-20 rounded shadow-md bg-green-700 text-white"><Save fontSize='large'/></button>
                 </div>
             </form>
         </div>
