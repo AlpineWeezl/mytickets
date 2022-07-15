@@ -1,6 +1,8 @@
 import React from 'react'
 import { RingLoader } from 'react-spinners'
 
+// Testkommentar
+
 const LoaderPage = () => {
     return (
         <div className="flex justify-center items-center w-full h-screen">
