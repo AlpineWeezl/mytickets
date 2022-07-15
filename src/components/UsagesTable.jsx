@@ -1,3 +1,4 @@
+import { Add } from '@mui/icons-material';
 import axios from 'axios';
 import { format, parseISO } from 'date-fns';
 import { useEffect, useState } from 'react'
@@ -51,7 +52,7 @@ const UsagesTable = ({ newUsageHandler, pass }) => {
                         onClick={newUsageHandler}
                         className='w-10 h-10 flex justify-center items-center rounded-full shadow-md text-white bg-blue-500 text-4xl'
                     >
-                        +
+                        <Add />
                     </button>
                 </div>
                 <div className='flex clex justify-center gap-3'>

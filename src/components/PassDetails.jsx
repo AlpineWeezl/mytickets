@@ -52,9 +52,20 @@ const PassDetails = () => {
     return (
         <>
             <div className='fixed flex justify-between items-center top-0 w-full shadow-md bg-white p-4'>
-            <button type="button" onClick={() => navigate(-1)} className="p-2 w-20 rounded shadow-md border border-red-600 bg-white text-red-600"><ArrowBack /></button>
+                <button
+                    type="button"
+                    onClick={() => navigate(-1)}
+                    className="p-2 w-14 h-14 rounded-full shadow-md border border-red-600 bg-white text-red-600"
+                >.
+                    <ArrowBack />
+                </button>
                 <h2 className='text-center font-bold text-2xl'>{pass.title}</h2>
-                <button onClick={editPassHandler} className='flex justify-center items-center w-12 h-12 bg-green-600 text-white rounded-full'><Edit /></button>
+                <button
+                    onClick={editPassHandler}
+                    className='flex justify-center items-center w-12 h-12 bg-green-600 text-white rounded-full'
+                >
+                    <Edit />
+                </button>
             </div>
             <div className='flex flex-col gap-5 my-24 mx-2'>
                 <TimeAnalyzeCard pass={pass} />
