@@ -28,6 +28,7 @@ const TimeAnalyzeCard = ({ pass }) => {
             setGoneDays(Math.round((new Date(end) - new Date(begin) - (new Date(end) - new Date())) / (3600 * 24 * 1000)));
         }
 
+
     }, [begin, end])
 
     return (
