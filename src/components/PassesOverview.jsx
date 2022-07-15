@@ -1,4 +1,4 @@
-import { ArrowBack } from '@mui/icons-material';
+import { Add, ArrowBack } from '@mui/icons-material';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
@@ -47,7 +47,13 @@ const PassesOverview = () => {
         <>
             <div className='flex flex-col justify-center items-center'>
                 <div className='fixed flex justify-between items-center top-0 w-full shadow-md bg-white p-4'>
-                    <button type="button" onClick={() => navigate(-1)} className="p-2 w-20 rounded shadow-md border border-red-600 bg-white text-red-600"><ArrowBack /></button>
+                    <button
+                        type="button"
+                        onClick={() => navigate(-1)}
+                        className="p-2 w-14 h-14 rounded-full shadow-md border border-red-600 bg-white text-red-600"
+                    >
+                        <ArrowBack />
+                    </button>
                     <h2 className='text-center font-bold text-2xl'>
                         {
                             (user.firstname.substring(user.firstname.length - 1, user.firstname.length) !== 's') ?
@@ -56,15 +62,14 @@ const PassesOverview = () => {
                                 (`${user.firstname.substring(0, user.firstname.length - 1)}s' Pässe`)
                         }
                     </h2>
-                    <div></div>
+                    <button
+                        type='button'
+                        onClick={newPassHandler}
+                        className='p-2 w-14 h-14 rounded-full shadow-md text-white bg-blue-500'
+                    >
+                        <Add />l
+                    </button>
                 </div>
-                <button
-                    onClick={newPassHandler}
-                    type='button'
-                    className='fixed bottom-20 right-6 w-14 h-14 flex justify-center items-center rounded-full shadow-md text-white bg-blue-500 text-6xl'
-                >
-                    +
-                </button>
                 <div className='flex flex-col items-center gap-2 pt-24 pb-16 px-2 w-full'>
                     {
 
