@@ -8,9 +8,12 @@ const UsageAnalyzeCard = ({ pass }) => {
     const { token } = useContext(authContext);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    // eslint-disable-next-line no-unused-vars
-    const [usages, setUsages] = useState(null);
-    const [sum, setSum] = useState(0);
+    const [isPercentage, setIsPercentage] = useState(false);
+    const [used, setUsed] = useState(0);
+    const [usedPercent, setUsedPercent] = useState(0);
+    const [remaining, setRemaining] = useState(0);
+    const [remainingPercent, setRemainingPercent] = useState(0);
+
     const apiUrl = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
@@ -21,11 +24,14 @@ const UsageAnalyzeCard = ({ pass }) => {
                 }
             })
             .then(res => {
-                setUsages(res.data.usages);
-                const mappedSum = res.data.usages.map(usage => {
+                const mappedUsed = res.data.usages.map(usage => {
                     return (usage.price);
                 });
-                setSum(mappedSum.reduce((total, current) => { return total + current; }, 0));
+                const tempUsed = mappedUsed.reduce((total, current) => { return total + current; }, 0)
+                setUsed(parseFloat(tempUsed).toFixed(2));
+                setUsedPercent(parseFloat((tempUsed / pass.price) * 100).toFixed(0));
+                setRemaining((tempUsed <= pass.price) ? parseFloat(pass.price - tempUsed).toFixed(2) : parseFloat(0).toFixed(2));
+                setRemainingPercent((tempUsed<= pass.price) ? (parseFloat(100 - ((tempUsed / pass.price) * 100)).toFixed(0)) : 0);
                 setLoading(false);
             })
             .catch(err => {
@@ -39,7 +45,7 @@ const UsageAnalyzeCard = ({ pass }) => {
     if (error) { return <h2>Error...</h2> }
 
     return (
-        <div className='rounded-md shadow-md p-4 bg-white'>
+        <div onClick={() => setIsPercentage(!isPercentage)} className='rounded-md shadow-md p-4 bg-white'>
             <h3 className='text-center font-bold text-xl my-3'>Kosten / Nutzen</h3>
             <div className='flex justify-center gap-3 mb-5'>
                 <p>Kaufpreis:</p>
@@ -49,11 +55,20 @@ const UsageAnalyzeCard = ({ pass }) => {
             <div className='flex justify-between gap-5'>
                 <div className='flex flex-col gap-3 items-center font-bold text-lg'>
                     <p>Genutzt</p>
-                    <CircularProgressbar value={sum} maxValue={pass.price} text={`${sum} €`} />
+                    <CircularProgressbar
+                        value={used}
+                        maxValue={pass.price}
+                        text={isPercentage ? `${usedPercent} %` :`${used} €`}
+                    />
                 </div>
                 <div className='flex flex-col gap-3 items-center font-bold text-lg'>
                     <p>Übrig</p>
-                    <CircularProgressbar value={((pass.price - sum) > 0) ? (pass.price - sum) : 0} maxValue={pass.price} minValue={0} text={`${((pass.price - sum) > 0) ? (pass.price - sum) : 0} €`} />
+                    <CircularProgressbar
+                        value={((pass.price - used) > 0) ? (pass.price - used) : 0}
+                        maxValue={pass.price}
+                        minValue={0}
+                        text={isPercentage ? `${remainingPercent} %` : `${remaining} €`}
+                    />
                 </div>
             </div>
         </div>
