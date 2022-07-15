@@ -67,7 +67,7 @@ const PassesOverview = () => {
                         onClick={newPassHandler}
                         className='p-2 w-14 h-14 rounded-full shadow-md text-white bg-blue-500'
                     >
-                        <Add />l
+                        <Add />
                     </button>
                 </div>
                 <div className='flex flex-col items-center gap-2 pt-24 pb-16 px-2 w-full'>
