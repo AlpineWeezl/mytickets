@@ -10,8 +10,6 @@ const TimeAnalyzeCard = ({ pass }) => {
     const [remainingDays, setRemainingDays] = useState(0);
     const [goneDays, setGoneDays] = useState(0);
 
-    console.log(isPercentage);
-
     useEffect(() => {
         const calculatedTimeProgress = Math.round((new Date(end) - new Date()) / (new Date(end) - new Date(begin)) * 10000, 2) / 100;
         (calculatedTimeProgress < 0) && setTimeProgress(0);
