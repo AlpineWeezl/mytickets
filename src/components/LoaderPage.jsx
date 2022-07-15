@@ -5,7 +5,8 @@ const LoaderPage = () => {
     return (
         <div className="flex justify-center items-center w-full h-screen">
             <RingLoader loading={true} size={150} />
-        </div>)
+        </div>
+    )
 }
 
 export default LoaderPage

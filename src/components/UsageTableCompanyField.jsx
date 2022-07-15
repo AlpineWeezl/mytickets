@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { authContext } from "../context/authContext";
+import LoaderTableContent from "./LoaderTableContent";
 
 const UsageTableCompanyField = ({ usage }) => {
     const { token } = useContext(authContext);
@@ -26,11 +27,23 @@ const UsageTableCompanyField = ({ usage }) => {
                 toast.error('Die Pass Details konnten nicht geladen werden!')
             });
     }, [apiUrl, token, usage.companyId]);
+
+    if (loading) { return <LoaderTableContent /> }
     if (error) { return <td>Error...</td> }
-    if (loading) { return <td>Loading...</td> }
 
     return (
-        <td id={usage._id} className='px-1 py-3 overflow-hidden'>{company.title.substring(0, 24)}{company.title.length > 24 && '...' }</td>
+        <td
+            id={usage._id}
+            className='px-1 py-3 overflow-hidden'
+        >
+            {loading ?
+                <LoaderTableContent /> :
+                <>
+                    {company.title.substring(0, 24)}
+                    {company.title.length > 24 && '...'}
+                </>
+            }
+        </td>
     )
 }
 
