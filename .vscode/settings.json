@@ -1,4 +1,5 @@
 {
     "editor.fontFamily": "'Fira Code iScript', 'Ubuntu Mono', 'Droid Sans Mono', 'monospace', monospace",
-    "files.autoSave": "afterDelay"
+    "files.autoSave": "afterDelay",
+    "workbench.colorTheme": "Visual Studio Light"
 }
