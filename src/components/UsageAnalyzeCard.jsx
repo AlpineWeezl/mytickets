@@ -29,9 +29,9 @@ const UsageAnalyzeCard = ({ pass }) => {
                 });
                 const tempUsed = mappedUsed.reduce((total, current) => { return total + current; }, 0)
                 setUsed(parseFloat(tempUsed).toFixed(2));
-                setUsedPercent(parseFloat((tempUsed / pass.price) * 100).toFixed(2));
-                setRemaining((tempUsed <= pass.price) ? parseFloat(pass.price - tempUsed).toFixed(2) : 0);
-                setRemainingPercent((tempUsed<= pass.price) ? (parseFloat(100 - ((tempUsed / pass.price) * 100)).toFixed(2)) : 0);
+                setUsedPercent(parseFloat((tempUsed / pass.price) * 100).toFixed(0));
+                setRemaining((tempUsed <= pass.price) ? parseFloat(pass.price - tempUsed).toFixed(2) : parseFloat(0).toFixed(2));
+                setRemainingPercent((tempUsed<= pass.price) ? (parseFloat(100 - ((tempUsed / pass.price) * 100)).toFixed(0)) : 0);
                 setLoading(false);
             })
             .catch(err => {
