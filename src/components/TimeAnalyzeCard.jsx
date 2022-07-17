@@ -75,7 +75,7 @@ const TimeAnalyzeCard = ({ pass }) => {
 					/>
 				</div>
 				<div className="flex flex-col gap-3 items-center font-bold text-lg">
-					<p>Übrig</p>
+					<p>Rest</p>
 					<CircularProgressbar
 						value={timeProgress}
 						text={
