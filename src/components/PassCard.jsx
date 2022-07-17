@@ -54,9 +54,9 @@ const PassCard = ({ pass }) => {
                 <h4 className='text-right'>Ende:</h4>
                 <p className='text-right'>{format(parseISO(pass.end), dateFormat)}</p>
                 <h4 className='text-right'>Kaufpreis:</h4>
-                <p className='text-right'>{pass.price} €</p>
+                <p className='text-right'>{parseFloat(pass.price).toFixed(2)} €</p>
                 <h4 className='text-right'>Benutzt:</h4>
-                <p className='text-right'>{sumUse} €</p>
+                <p className='text-right'>{parseFloat(sumUse).toFixed(2)} €</p>
             </div>
         </div>
     )
