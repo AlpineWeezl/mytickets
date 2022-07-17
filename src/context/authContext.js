@@ -28,6 +28,7 @@ const AuthProvider = ({ children }) => {
                     }
                 )
                 .then(res => {
+                    console.log(res.data);
                     setUserId(res.data.user._id);
                     setUser(res.data.user);
                     setVerified(true);
