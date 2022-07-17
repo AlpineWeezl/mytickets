@@ -66,8 +66,7 @@ const UsagesTable = ({ newUsageHandler, pass }) => {
                                 <th className='py-3 pr-2 text-right'>Preis</th>
                             </tr>
                         </thead>
-                        <tbody>
-
+                        <tbody className='text-sm'>
                             {
                                 usages.map((usage, i) => {
                                     return (
