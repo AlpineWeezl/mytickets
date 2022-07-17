@@ -76,7 +76,6 @@ const UsagesChart = ({ pass }) => {
 		const sortedCompanies = companyValue.sort((a, b) => {
 			return b.value - a.value;
 		});
-		console.log(sortedCompanies);
 
 		const chartLabels = sortedCompanies.map((cmpny) => {
 			return cmpny.label;
@@ -99,9 +98,9 @@ const UsagesChart = ({ pass }) => {
 						"rgba(153, 102, 255, 0.7)",
 						"rgba(255, 159, 64, 0.7)",
 						"rgba(163, 192, 86, 0.7)",
-						"rgba(255, 159, 64, 0.7)",
-						"rgba(255, 159, 64, 0.7)",
-						"rgba(255, 159, 64, 0.7)",
+						"rgba(192, 64, 255, 0.7)",
+						"rgba(162, 54, 99, 0.7)",
+						"rgba(64, 236, 123, 0.7)",
 					],
 					borderColor: [
 						"rgba(255, 99, 132, 1)",
@@ -110,10 +109,10 @@ const UsagesChart = ({ pass }) => {
 						"rgba(75, 192, 192, 1)",
 						"rgba(153, 102, 255, 1)",
 						"rgba(255, 159, 64, 1)",
-						"rgba(255, 159, 64, 1)",
-						"rgba(255, 159, 64, 1)",
-						"rgba(255, 159, 64, 1)",
-						"rgba(255, 159, 64, 1)",
+						"rgba(163, 192, 86, 1)",
+						"rgba(192, 64, 255, 1)",
+						"rgba(162, 54, 99, 1)",
+						"rgba(64, 236, 123, 1)",
 					],
 					borderWidth: 1,
 				},

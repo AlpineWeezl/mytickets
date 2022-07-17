@@ -63,7 +63,7 @@ const UsageAnalyzeCard = ({ pass }) => {
                     />
                 </div>
                 <div className='flex flex-col gap-3 items-center font-bold text-lg'>
-                    <p>Übrig</p>
+                    <p>Rest</p>
                     <CircularProgressbar
                         value={((pass.price - used) > 0) ? (pass.price - used) : 0}
                         maxValue={pass.price}
