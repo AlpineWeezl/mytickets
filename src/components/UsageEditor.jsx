@@ -209,6 +209,7 @@ const UsageEditor = ({ newUsage }) => {
                                 id="duration"
                                 aria-describedby="duration-helper-text border"
                                 type="number"
+                                step={0.5}
                                 defaultValue={!newUsage ? usage.duration : ''}
                                 className='border-b-2 p-2 text-right'
                             />
