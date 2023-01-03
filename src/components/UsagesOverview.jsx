@@ -2,12 +2,12 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { authContext } from "../context/authContext";
+import { appContext } from "../context/appContext";
 import LoaderPage from "./LoaderPage";
 import UsagesPassDropdown from "./UsagesCardDropdown";
 
 const UsagesOverview = () => {
-	const { user, verified, token } = useContext(authContext);
+	const { user, verified, token } = useContext(appContext);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const [passes, setPasses] = useState(null);
