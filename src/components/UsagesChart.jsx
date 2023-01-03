@@ -4,11 +4,11 @@ import { useContext } from "react";
 import "chart.js/auto";
 import { Chart } from "react-chartjs-2";
 import { toast } from "react-toastify";
-import { authContext } from "../context/authContext";
+import { appContext } from "../context/appContext";
 import LoaderPage from "./LoaderPage";
 
 const UsagesChart = ({ pass }) => {
-	const { token } = useContext(authContext);
+	const { token } = useContext(appContext);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const [usages, setUsages] = useState(null);
