@@ -1,12 +1,13 @@
 import { ArrowDropDown, ArrowDropUp } from "@mui/icons-material";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { appContext } from "../context/appContext";
 
 const CompanyDropDown = ({ usage, selectedCompany, setSelectedCompany }) => {
-	const { token, selectedAssociationId } = useContext(appContext);
+	const { passId } = useParams();
+	const { token } = useContext(appContext);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const [companies, setCompanies] = useState(null);
@@ -15,31 +16,50 @@ const CompanyDropDown = ({ usage, selectedCompany, setSelectedCompany }) => {
 	const apiUrl = process.env.REACT_APP_API_URL;
 
 	useEffect(() => {
-		axios
-			.get(`${apiUrl}/companies/association/${selectedAssociationId}`, {
-				headers: { authorization: token },
-			})
-			.then((res) => {
-				setCompanies(res.data.companies);
+		const loadData = async () => {
+			await axios
+				.get(`${apiUrl}/passes/${passId}`, {
+					headers: { authorization: token },
+				})
+				.then((res) => {
+					axios
+						.get(
+							`${apiUrl}/companies/association/${res.data.pass.associationId}`,
+							{
+								headers: { authorization: token },
+							}
+						)
+						.then((res) => {
+							setCompanies(res.data.companies);
+							const setInitial = async (companyId) => {
+								const com = await res.data.companies.find(
+									(cm) => cm._id === companyId
+								);
+								await setSelectedCompany(com);
+							};
 
-				const setInitial = async (companyId) => {
-					const com = await res.data.companies.find(
-						(cm) => cm._id === companyId
-					);
-					await setSelectedCompany(com);
-				};
+							usage && setInitial(usage.companyId);
 
-				usage && setInitial(usage.companyId);
-
-				setLoading(false);
-			})
-			.catch((err) => {
-				toast.error("Gesellschaften konnten nicht geladen werden!");
-				console.log(err);
-				setError(err);
-				setLoading(false);
-			});
-	}, [apiUrl, navigate, selectedAssociationId, setSelectedCompany, token, usage]);
+							setLoading(false);
+						})
+						.catch((err) => {
+							toast.error(
+								"Gesellschaften konnten nicht geladen werden!"
+							);
+							console.log(err);
+							setError(err);
+							setLoading(false);
+						});
+				})
+				.catch((err) => {
+					toast.error("Gesellschaften konnten nicht geladen werden!");
+					console.log(err);
+					setError(err);
+					setLoading(false);
+				});
+		};
+		loadData();
+	}, [apiUrl, navigate, setSelectedCompany, token, usage, passId]);
 
 	const toggleOpenHandler = () => {
 		setIsOpen(!isOpen);
@@ -52,7 +72,9 @@ const CompanyDropDown = ({ usage, selectedCompany, setSelectedCompany }) => {
 				headers: { authorization: token },
 			})
 			.then((res) => {
-				setSelectedCompany(res.data.company);
+				setSelectedCompany(
+					res.data.company.sort((a, b) => a.title - b.title)
+				);
 			})
 			.catch((err) => {
 				toast.error("Die Gesellschaft konnte nicht gesetzt werden!");

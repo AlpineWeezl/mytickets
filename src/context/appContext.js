@@ -15,7 +15,6 @@ const AppContextProvider = ({ children }) => {
 	const [token, setToken] = useState(localStorage.getItem("token"));
 	const [verified, setVerified] = useState(false);
 	const [dateFormat, setDateFormat] = useState("yyyy-MM-dd");
-	const [selectedAssociation, setSelectedAssociation] = useState(null);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -62,8 +61,6 @@ const AppContextProvider = ({ children }) => {
 				setSearchString,
 				dateFormat,
 				setDateFormat,
-				selectedAssociation,
-				setSelectedAssociation,
 			}}
 		>
 			{children}

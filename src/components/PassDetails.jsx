@@ -12,7 +12,7 @@ import UsagesTable from "./UsagesTable";
 
 const PassDetails = () => {
 	const { passId } = useParams();
-	const { setSelectedAssociationId, token, verified } =
+	const { token, verified } =
 		useContext(appContext);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
@@ -32,13 +32,12 @@ const PassDetails = () => {
 			.then((res) => {
 				setPass(res.data.pass);
 				setLoading(false);
-				setSelectedAssociationId(res.data.pass.associationId);
 			})
 			.catch((err) => {
 				setError(err);
 				toast.error("Die Pass Details konnten nicht geladen werden!");
 			});
-	}, [apiUrl, navigate, passId, setSelectedAssociationId, token, verified]);
+	}, [apiUrl, navigate, passId, token, verified]);
 
 	const newUsageHandler = () => {
 		navigate(`/usages/new/${passId}`);
