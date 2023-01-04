@@ -72,9 +72,7 @@ const CompanyDropDown = ({ usage, selectedCompany, setSelectedCompany }) => {
 				headers: { authorization: token },
 			})
 			.then((res) => {
-				setSelectedCompany(
-					res.data.company.sort((a, b) => a.title - b.title)
-				);
+				setSelectedCompany(res.data.company);
 			})
 			.catch((err) => {
 				toast.error("Die Gesellschaft konnte nicht gesetzt werden!");
