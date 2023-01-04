@@ -27,6 +27,7 @@ const UsageEditor = ({ newUsage, associationId }) => {
 					headers: { authorization: token },
 				})
 				.then((res) => {
+					console.log(res.data);
 					setUsage(res.data.usage);
 					setLoading(false);
 				})
@@ -39,7 +40,7 @@ const UsageEditor = ({ newUsage, associationId }) => {
 		} else {
 			setLoading(false);
 		}
-	}, [apiUrl, navigate, newUsage, token, usageId, verified]);
+	}, [apiUrl, navigate, newUsage, passId, token, usageId, verified]);
 
 	const usageHandler = async (e) => {
 		e.preventDefault();
